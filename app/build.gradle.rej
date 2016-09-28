@@ -1,9 +1,0 @@
-diff a/app/build.gradle b/app/build.gradle	(rejected hunks)
-@@ -2,7 +2,6 @@
- 
- android {
-     compileSdkVersion 24
--    buildToolsVersion "24.0.0"
-     buildToolsVersion "23.0.3"
- 
-     defaultConfig {

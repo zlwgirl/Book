@@ -21,19 +21,25 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
         <RadioButton
+            android:drawableTop="@drawable/book_btn"
             android:id="@+id/radioButtonOne"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:text="看书"
+<<<<<<< HEAD
             android:gravity="center"
             android:textSize="30sp"/>
         <View
             android:layout_width="0.8dp"
             android:layout_height="match_parent"
             android:background="#000000"/>
+=======
+            android:gravity="center" />
+>>>>>>> d5794bb80ccdd8b54cf9946efc9b4328aa0d8707
         <RadioButton
+            android:drawableTop="@drawable/boostore_btn"
             android:id="@+id/radioButtonTwo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -41,6 +47,6 @@
             android:button="@null"
             android:text="书城"
             android:gravity="center"
-            android:textSize="30sp"/>
+          />
     </RadioGroup>
 </LinearLayout>

@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 
 /**
  * Created by Z-LW on 2016/9/26.
+ * 书城页面
+ *
  */
 public class BookStoreFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
     private RadioGroup radioGroup;
