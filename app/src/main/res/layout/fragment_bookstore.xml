@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true">
+            <RadioButton
+                android:id="@+id/radioButton_free"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="免费"
+                android:button="@null"
+                android:textSize="20sp"
+                android:gravity="center" />
+            <View
+                android:layout_width="0.8dp"
+                android:layout_height="match_parent"
+                android:background="#000000"/>
+            <RadioButton
+                android:id="@+id/radioButton_pay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="付费"
+                android:button="@null"
+                android:textSize="20sp"
+                android:gravity="center"/>
+        </RadioGroup>
+        <ImageButton
+            android:id="@+id/imageButton_search"
+            android:layout_height="28dp"
+            android:layout_width="30dp"
+            android:background="@mipmap/search"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/fragment_replace"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>
