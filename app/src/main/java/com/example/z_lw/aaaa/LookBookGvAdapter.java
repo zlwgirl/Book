@@ -15,12 +15,16 @@ import java.util.List;
 public class LookBookGvAdapter extends BaseAdapter {
     private Context context;
     private List<Photo> pictures;
-    public LookBookGvAdapter( Context context,List<Photo> pictures)
+    public LookBookGvAdapter( Context context)
     {
         this.context = context;
+    }
+
+    public void setPictures(List<Photo> pictures) {
         this.pictures = pictures;
         notifyDataSetChanged();
     }
+
     @Override
     public int getCount() {
        return pictures != null ? pictures.size():0;
@@ -43,7 +47,8 @@ public class LookBookGvAdapter extends BaseAdapter {
         }else {
          viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.imageView.setImageResource(R.mipmap.ic_launcher);
+        Photo photo = (Photo) getItem(position);
+        viewHolder.imageView.setImageResource(photo.getImage());
         return convertView;
     }
     class ViewHolder{
