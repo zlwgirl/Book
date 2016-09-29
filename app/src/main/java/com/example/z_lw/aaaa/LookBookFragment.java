@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
     private Button btn_picture, btn_cancle;
     private SharedPreferences.Editor editor;
     private TextView setTv, myMessage,money;
+    private ImageView loginIm;
 
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
@@ -74,6 +76,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         setTv = (TextView) view.findViewById(R.id.tv_set);
         myMessage = (TextView) view.findViewById(R.id.my_message);
         money = (TextView) view.findViewById(R.id.my_money);
+        loginIm = (ImageView) view.findViewById(R.id.login_im);
     }
 
     @Override
@@ -90,7 +93,8 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
 
         SharedPreferences spPicture = getActivity().getSharedPreferences("Picture", getActivity().MODE_PRIVATE);
         editor = spPicture.edit();
-        circleImageView.setImageBitmap(BitmapFactory.decodeFile(spPicture.getString("tu", "")));
+            circleImageView.setImageBitmap(BitmapFactory.decodeFile(spPicture.getString("tu"," ")));
+
 // 按钮点击弹出抽屉
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);// 锁定当前行
         bookBtn.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +117,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         setTv.setOnClickListener(this);
         myMessage.setOnClickListener(this);
         money.setOnClickListener(this);
+        loginIm.setOnClickListener(this);
     }
 
     @Override
@@ -132,6 +137,10 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
             case R.id.my_money:
                 Intent intentMoney = new Intent(getContext(), MyMoney.class);
                 startActivity(intentMoney);
+                break;
+            case R.id.login_im:
+                Intent intentLogin = new Intent(getContext(),LoginActivity.class);
+                startActivity(intentLogin);
                 break;
         }
     }
@@ -213,9 +222,9 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
                 Cursor cursor = getActivity().getContentResolver().query(selectdeImage, null, null, null, null);
                 while (cursor.moveToNext()) {
                     String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                    circleImageView.setImageBitmap(BitmapFactory.decodeFile(path));
-                    editor.putString("tu", path);
-                    editor.commit();
+                        circleImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                        editor.putString("tu", path);
+                        editor.commit();
                 }
                 cursor.close();
                 break;
@@ -229,15 +238,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity().getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
                             .show();
                 }
-                Uri selectdeImage1 = intent.getData();
-                Cursor cursor1 = getActivity().getContentResolver().query(selectdeImage1, null, null, null, null);
-                while (cursor1.moveToNext()) {
-                    String path = cursor1.getString(cursor1.getColumnIndex(MediaStore.Images.Media.DATA));
-                    circleImageView.setImageBitmap(BitmapFactory.decodeFile(path));
-                    editor.putString("tu", path);
-                    editor.commit();
-                }
-                cursor1.close();
                 break;
             case CODE_RESULT_REQUEST:
                 if (intent != null) {
