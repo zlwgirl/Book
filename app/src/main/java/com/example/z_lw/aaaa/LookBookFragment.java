@@ -40,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Z-LW on 2016/9/26.
  */
 public class LookBookFragment extends Fragment implements View.OnClickListener {
-    private Button bookBtn;
+    private TextView bookBtn;
     private GridView gridView;
     private LookBookGvAdapter gvAdapter;
     private List<Photo> photo;
@@ -48,14 +48,14 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
     private CircleImageView circleImageView;
     private Button btn_picture, btn_cancle;
     private SharedPreferences.Editor editor;
-    private TextView setTv, myMessage,money;
+    private TextView setTv, myMessage, money;
     private ImageView loginIm;
+    private TextView userName ;
 
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
     /* 请求识别码 */
     private static final int CODE_GALLERY_REQUEST = 0xa0;//本地
-    private static final int CODE_CAMERA_REQUEST = 0xa1;//拍照
     private static final int CODE_RESULT_REQUEST = 0xa2;//最终裁剪后的结果
 
 
@@ -69,7 +69,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bookBtn = (Button) view.findViewById(R.id.lookbook_bt_title);
+        bookBtn = (TextView) view.findViewById(R.id.lookbook_bt_title);
         gridView = (GridView) view.findViewById(R.id.lookbook_gv);
         drawerLayout = (DrawerLayout) view.findViewById(R.id.drawlayout);
         circleImageView = (CircleImageView) view.findViewById(R.id.drawerlayout_cr_photo);
@@ -77,6 +77,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         myMessage = (TextView) view.findViewById(R.id.my_message);
         money = (TextView) view.findViewById(R.id.my_money);
         loginIm = (ImageView) view.findViewById(R.id.login_im);
+        userName = (TextView) view.findViewById(R.id.username_tv);
     }
 
     @Override
@@ -89,7 +90,11 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
 
         SharedPreferences spPicture = getActivity().getSharedPreferences("Picture", getActivity().MODE_PRIVATE);
         editor = spPicture.edit();
-            circleImageView.setImageBitmap(BitmapFactory.decodeFile(spPicture.getString("tu"," ")));
+        circleImageView.setImageBitmap(BitmapFactory.decodeFile(spPicture.getString("tu", " ")));
+        SharedPreferences spUsername = getActivity().getSharedPreferences("Register",getActivity().MODE_PRIVATE);
+        String name = spUsername.getString("userName","");
+        userName.setText(name);
+
 
 // 按钮点击弹出抽屉
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);// 锁定当前行
@@ -100,11 +105,13 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-
+// grideview的监听事件
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(), "hahaha", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), GrideViewDetailActivity.class);
+                startActivity(intent);
+
             }
         });
         // 头像的点击
@@ -135,7 +142,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
                 startActivity(intentMoney);
                 break;
             case R.id.login_im:
-                Intent intentLogin = new Intent(getContext(),LoginActivity.class);
+                Intent intentLogin = new Intent(getContext(), LoginActivity.class);
                 startActivity(intentLogin);
                 break;
         }
@@ -161,7 +168,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
         btn_picture = (Button) window.findViewById(R.id.btn_picture);
-//        btn_photo = (Button) window.findViewById(R.id.btn_photo);
         btn_cancle = (Button) window.findViewById(R.id.btn_cancle);
         // 相册
         btn_picture.setOnClickListener(new View.OnClickListener() {
@@ -178,22 +184,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
                 dialog.dismiss();
             }
         });
-        // 相机
-//        btn_photo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//// 判断存储卡是否可用，存储照片文件
-//                if (hasSdcard()) {
-//                    intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
-//                            .fromFile(new File(Environment
-//                                    .getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-//                }
-//                startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
-//
-//                dialog.dismiss();
-//            }
-//        });
         btn_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,28 +202,20 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
             return;
         }
         switch (requestCode) {
-            case CODE_GALLERY_REQUEST://如果是来自本地的
-                cropPhoto(intent.getData());//直接裁剪图片
+            case CODE_GALLERY_REQUEST:
+                if (resultCode == getActivity().RESULT_OK) {
+                    cropPhoto(intent.getData());// 裁剪图片
+                }//如果是来自本地的
+//                cropPhoto(intent.getData());//直接裁剪图片
                 Uri selectdeImage = intent.getData();
                 Cursor cursor = getActivity().getContentResolver().query(selectdeImage, null, null, null, null);
                 while (cursor.moveToNext()) {
                     String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                        circleImageView.setImageBitmap(BitmapFactory.decodeFile(path));
-                        editor.putString("tu", path);
-                        editor.commit();
+                    circleImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                    editor.putString("tu", path);
+                    editor.commit();
                 }
                 cursor.close();
-                break;
-            case CODE_CAMERA_REQUEST:
-                if (hasSdcard()) {
-                    File tempFile = new File(
-                            Environment.getExternalStorageDirectory(),
-                            IMAGE_FILE_NAME);
-                    cropPhoto(Uri.fromFile(tempFile));
-                } else {
-                    Toast.makeText(getActivity().getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
-                            .show();
-                }
                 break;
             case CODE_RESULT_REQUEST:
                 if (intent != null) {
@@ -293,19 +275,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         startActivityForResult(intent, 3);
     }
 
-    /**
-     * 检查设备是否存在SDCard的工具方法
-     */
-    public static boolean hasSdcard() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-// 有存储的SDCard
-            return true;
-        } else {
-            return false;
-        }
 
-
-    }
 }
 
