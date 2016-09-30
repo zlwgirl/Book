@@ -12,10 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:background="#000000"/>
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
@@ -30,11 +26,6 @@
             android:button="@null"
             android:text="看书"
             android:gravity="center" />
-        <View
-            android:layout_width="0.8dp"
-            android:layout_height="match_parent"
-            android:background="#000000"/>
-
         <RadioButton
             android:drawableTop="@drawable/boostore_btn"
             android:id="@+id/radioButtonTwo"

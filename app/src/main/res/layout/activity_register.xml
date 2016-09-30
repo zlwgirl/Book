@@ -22,7 +22,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/login_et"
+            android:id="@+id/register_et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/login_edittext"
@@ -32,7 +32,7 @@
             android:textColorHint="#ffffff" />
 
         <EditText
-            android:id="@+id/register_et"
+            android:id="@+id/register_et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -64,4 +64,10 @@
             android:layout_toRightOf="@id/register_login_btn"
             android:text="注册" />
     </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tet"
+        android:text="hahahhahah"
+        android:textColor="#ffffff"/>
 </LinearLayout>
