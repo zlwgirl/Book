@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import net.tsz.afinal.FinalHttp;
@@ -20,41 +22,56 @@ import org.json.JSONObject;
 /**
  * Created by Z-LW on 2016/9/29.
  */
-public class RegisterActivity extends Activity implements View.OnClickListener {
-    private Button loginBtn, registerBtn;
-    private EditText mEdittext_username, mEdittext_password;
-    static final String PATH = "http://139.129.215.221:8080/service/UserServlet";
-//    static StringBuilder url = null;
-
+public class RegisterActivity extends Activity {
+    EditText mAccount, mPassword, mName, mPhone, mAge, mAddress;
+    RadioButton mMan, mWoman;
+    RadioGroup mRg;
+    Button mRegister, mCancel;
+    static final String REG_URL = "http://139.129.215.221:8080/service/UserServlet";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        loginBtn = (Button) findViewById(R.id.register_login_btn);
-        registerBtn = (Button) findViewById(R.id.register_btn);
-        mEdittext_username = (EditText) findViewById(R.id.register_et_username);
-        mEdittext_password = (EditText) findViewById(R.id.register_et_password);
-        loginBtn.setOnClickListener(this);
-        registerBtn.setOnClickListener(this);
-    }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.register_login_btn:
-                String username = mEdittext_username.getText().toString();
-                String password = mEdittext_password.getText().toString();
+        mAccount = (EditText) findViewById(R.id.account);
+        mPassword = (EditText) findViewById(R.id.password);
+        mRg = (RadioGroup) findViewById(R.id.rg);
+        mName = (EditText) findViewById(R.id.name);
+        mPhone = (EditText) findViewById(R.id.phone);
+        mAge = (EditText) findViewById(R.id.age);
+        mAddress = (EditText) findViewById(R.id.address);
+        mMan = (RadioButton) findViewById(R.id.rb_man);
+        mWoman = (RadioButton) findViewById(R.id.rb_woman);
+        mRegister = (Button) findViewById(R.id.reg_register);
+        mCancel = (Button) findViewById(R.id.cancel);
+
+        mRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String account = mAccount.getText().toString();
+                String password = mPassword.getText().toString();
+                String name = mName.getText().toString();
+                String phone = mPhone.getText().toString();
+                String age = mAge.getText().toString();
+                String address = mAddress.getText().toString();
+                String gender = mRg.getCheckedRadioButtonId() == R.id.rb_man ? "man"
+                        : "woman";
+                SharedPreferences sp = getSharedPreferences("Register",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("userName",name);
+                editor.commit();
+
                 FinalHttp finalHttp = new FinalHttp();
                 AjaxParams params = new AjaxParams();
                 params.put("type", "reg");
-                params.put("account", username);
+                params.put("account", account);
                 params.put("password", password);
-                params.put("name", "1");
-                params.put("phone", "2");
-                params.put("gender", "3");
-                params.put("age", "4");
-                params.put("address", "5");
-                finalHttp.post(PATH, params, new AjaxCallBack<Object>() {
+                params.put("name", name);
+                params.put("phone", phone);
+                params.put("gender", gender);
+                params.put("age", age);
+                params.put("address", address);
+                finalHttp.post(REG_URL, params, new AjaxCallBack<Object>() {
                     @Override
                     public void onFailure(Throwable t, int errorNo,
                                           String strMsg) {
@@ -69,40 +86,26 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
                         decodeJSON(t.toString());
                     }
                 });
-                SharedPreferences sp = getSharedPreferences("Register", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-
-//                boolean result = UserService.check(username, password);
-//                if (result) {
-//                    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
-//                }
-
-
-                editor.putString("userName", username);
-                editor.commit();
-                Intent intentLogin = new Intent(this, MainActivity.class);
-                startActivity(intentLogin);
-                finish();
-                break;
-
-
-            case R.id.register_btn:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();
-                break;
-        }
-    }
+            }
+        });
 
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
 
     private void decodeJSON(String json) {
         try {
             JSONObject object = new JSONObject(json);
             JSONObject data = object.getJSONObject("data");
             Boolean result = data.getBoolean("flag");
-            String username = data.getString("account");
+            String account = data.getString("account");
             String name = data.getString("name");
             String phone = data.getString("phone");
             String gender = data.getString("gender");
@@ -110,128 +113,18 @@ public class RegisterActivity extends Activity implements View.OnClickListener {
             String address = data.getString("address");
             SharedPreferences sp = getSharedPreferences("UserInformation",
                     Context.MODE_PRIVATE);
-            sp.edit().putString("account", username)
+            sp.edit().putString("account", account).putString("name", name)
+                    .putString("phone", phone).putString("gender", gender)
+                    .putString("age", age).putString("address", address)
                     .commit();
             if (result) {
-
-                Toast.makeText(RegisterActivity.this, "注册成功" + "账号：" + username, Toast.LENGTH_LONG)
+                Toast.makeText(RegisterActivity.this, "注册成功" + "昵称：" + name + "电话:" + phone, Toast.LENGTH_LONG)
                         .show();
-
+                finish();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
-
-//    public static class UserService {
-//        public static boolean check(String username, String password) {
-//            path = "http://139.129.215.221:8080/service/UserServlet";
-//            //将用户名和密码放入HashMap中
-//            Map<String, String> params = new HashMap<String, String>();
-//            params.put("account", username);
-//            params.put("password", password);
-//            params.put("type", "reg");
-//            params.put("name", "2");
-//            params.put("phone", "3");
-//            params.put("gender", "4");
-//            params.put("age", "5");
-//            params.put("address", "6");
-//            try {
-//                return sendGETRequest(path, params, "UTF-8");
-//            } catch (MalformedURLException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            return false;
-//        }
-//
-//        private static boolean sendGETRequest(String path,
-//                                              Map<String, String> params, String encode) throws MalformedURLException, IOException, JSONException {
-//            url = new StringBuilder(path);
-//            url.append("?");
-//            for (Map.Entry<String, String> entry : params.entrySet()) {
-//                url.append(entry.getKey()).append("=");
-//                url.append(URLEncoder.encode(entry.getValue(), encode));
-//                url.append("&");
-//            }
-//            //删掉最后一个&
-//            url.deleteCharAt(url.length() - 1);
-//            Log.d("TAGGG", "url  ____:" + url);
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    HttpURLConnection conn = null;
-//                    try {
-//                        conn = (HttpURLConnection) new URL(url.toString()).openConnection();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    conn.setConnectTimeout(5000);
-//                    try {
-//                        conn.setRequestMethod("POST");
-//                    } catch (ProtocolException e) {
-//                        e.printStackTrace();
-//                    }
-//                    try {
-//                        if (conn.getResponseCode() == 200) {
-//                            InputStream is = conn.getInputStream();
-//                            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-//                            String str = "";
-//                            StringBuilder builder = new StringBuilder();
-//                            while ((str = br.readLine()) != null) {
-//                                builder.append(str);
-//                            }
-//                            Log.d("hhk", "sendGETRequest: " + conn.getResponseCode());
-//                            JSONObject jsonObject = new JSONObject(builder.toString());
-//                            JSONObject object = jsonObject.getJSONObject("data");
-//                            boolean flag = object.getBoolean("flag");
-//                            if (flag) {
-//
-//                            } else {
-////                                Toast.makeText(RegisterActivity.this, "", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-////
-//                }
-//            }).start();
-//            return false;
-
-//    public static void sendGetRequest(Map<String,String> infos){
-//        String url = "http://139.129.215.221:8080/service/UserServlet?";
-//        StringBuilder builder = new StringBuilder(url);
-//        Set<String> keys = infos.keySet();
-//        for (String key : keys) {
-//            String value = infos.get(key);
-//            builder.append(key);
-//            builder.append("=");
-//            builder.append(value);
-//            builder.append("&");
-//        }
-//
-//        builder.deleteCharAt(builder.length() - 1);
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        }).start();
-
-
-//    }
-//        }
-//    }
 }
+
