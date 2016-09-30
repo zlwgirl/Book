@@ -33,7 +33,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="15dp"
-            android:src="@mipmap/timg"/>
+            android:src="@mipmap/mine"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:text="书名：高等数学" />
+                android:text="书名：自己做系统" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,5 +70,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:textSize="15sp"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        android:text="内容为空"
+        android:gravity="center"/>
 </LinearLayout>

@@ -15,7 +15,7 @@ import android.widget.GridView;
  */
 public class PayFragment extends Fragment implements AdapterView.OnItemClickListener {
     private GridView gridView;
-    private GridViewAdapter gridViewAdapter;
+    private PayGrideViewAdapter gridViewAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class PayFragment extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        gridViewAdapter = new GridViewAdapter(getContext());
+        gridViewAdapter = new PayGrideViewAdapter(getContext());
         gridView.setAdapter(gridViewAdapter);
         gridView.setOnItemClickListener(this);
     }

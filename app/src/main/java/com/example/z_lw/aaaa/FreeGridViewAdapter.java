@@ -1,6 +1,10 @@
 package com.example.z_lw.aaaa;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Network;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +27,14 @@ import java.util.List;
  * Created by Administrator on 2016/9/27.
  * 书城中轮播图下方的平铺布局的适配器
  */
-public class GridViewAdapter extends BaseAdapter {
+public class FreeGridViewAdapter extends BaseAdapter {
     private Context context;
     private List<Photo> pictures;
-    public GridViewAdapter(Context context) {
+
+    public FreeGridViewAdapter(Context context) {
         this.context = context;
     }
+
     public void setPictures(List<Photo> pictures) {
         this.pictures = pictures;
         notifyDataSetChanged();
@@ -36,7 +42,7 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return pictures!=null?pictures.size():3;
+        return pictures != null ? pictures.size() : 1;
     }
 
     @Override
@@ -53,36 +59,22 @@ public class GridViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         GrideViewHolder grideViewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_gridview,parent,false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_gridview, parent, false);
             grideViewHolder = new GrideViewHolder(convertView);
             convertView.setTag(grideViewHolder);
-        }else {
+        } else {
             grideViewHolder = (GrideViewHolder) convertView.getTag();
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://139.129.215.221:8080/images/AdvancedMathematics.png");
-                    URLConnection connection = url.openConnection();
-                    InputStream inputStream = connection.getInputStream();
-
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-        grideViewHolder.imageView.setImageResource(R.mipmap.timg);
+        grideViewHolder.imageView.setImageResource(R.mipmap.math);
         return convertView;
     }
-    class GrideViewHolder{
+
+    class GrideViewHolder {
         private ImageView imageView;
-        public GrideViewHolder(View view){
+        public GrideViewHolder(View view) {
             imageView = (ImageView) view.findViewById(R.id.imageView);
         }
 
     }
 }
+

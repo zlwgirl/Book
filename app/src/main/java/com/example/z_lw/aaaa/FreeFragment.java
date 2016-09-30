@@ -25,7 +25,7 @@ import android.widget.RadioGroup;
  * Created by Administrator on 2016/9/27.
  */
 public class FreeFragment extends Fragment implements AdapterView.OnItemClickListener, RadioGroup.OnCheckedChangeListener {
-    private GridViewAdapter gridViewAdapter;
+    private FreeGridViewAdapter gridViewAdapter;
     private GridView gridView;
     private ViewPager viewPager;
     private RadioGroup radioGroup;
@@ -56,7 +56,7 @@ public class FreeFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        gridViewAdapter = new GridViewAdapter(getContext());
+        gridViewAdapter = new FreeGridViewAdapter(getContext());
         gridView.setAdapter(gridViewAdapter);
         gridView.setOnItemClickListener(this);
         myAdapter = new MyAdapter(getChildFragmentManager());
