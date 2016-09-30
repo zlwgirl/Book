@@ -33,15 +33,10 @@ public class FreeDetailsActivity extends AppCompatActivity implements View.OnCli
         button_dowm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor sp = getSharedPreferences("book",MODE_PRIVATE).edit();
-                sp.putInt("image",R.mipmap.timg);
-                sp.commit();
-                finish();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-
                             URL url = new URL("http://139.129.215.221:8080/books/test.txt");
                             URLConnection connection = url.openConnection();
                             InputStream inputStream = connection.getInputStream();
@@ -55,6 +50,8 @@ public class FreeDetailsActivity extends AppCompatActivity implements View.OnCli
                             }
                             outputStream.flush();
                             outputStream.close();
+                            inputStream.close();
+
 
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
@@ -63,8 +60,6 @@ public class FreeDetailsActivity extends AppCompatActivity implements View.OnCli
                         }
                     }
                 }).start();
-                System.out.println("success");
-
             }
         });
     }

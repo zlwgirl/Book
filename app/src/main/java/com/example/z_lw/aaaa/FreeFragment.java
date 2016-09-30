@@ -90,23 +90,15 @@ public class FreeFragment extends Fragment implements AdapterView.OnItemClickLis
                 }
 
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
-
-
-
-
-
-
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message message) {
                 viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
-                return false;
+                return true;
             }
         });
             new Thread(new Runnable() {

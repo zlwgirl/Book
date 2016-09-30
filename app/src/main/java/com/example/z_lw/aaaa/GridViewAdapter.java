@@ -59,6 +59,22 @@ public class GridViewAdapter extends BaseAdapter {
         }else {
             grideViewHolder = (GrideViewHolder) convertView.getTag();
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://139.129.215.221:8080/images/AdvancedMathematics.png");
+                    URLConnection connection = url.openConnection();
+                    InputStream inputStream = connection.getInputStream();
+
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
         grideViewHolder.imageView.setImageResource(R.mipmap.timg);
         return convertView;
     }
