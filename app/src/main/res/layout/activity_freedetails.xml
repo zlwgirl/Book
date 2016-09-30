@@ -29,11 +29,29 @@
             android:text="背景"
             android:layout_margin="5dp"/>
     </RelativeLayout>
-
-    <ListView
-        android:id="@+id/bookstore_listView"
-        android:layout_height="0dp"
+    <View
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="1dp"
+        android:background="#d6d6d6" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/bookstore_textView"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/button_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:text="下载"
+            />
+
+    </FrameLayout>
+
 </LinearLayout>

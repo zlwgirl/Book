@@ -80,10 +80,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         photo = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            photo.add(new Photo(R.mipmap.ic_launcher));
-        }
-
         gvAdapter = new LookBookGvAdapter(getContext());
         gvAdapter.setPictures(photo);
         gridView.setAdapter(gvAdapter);

@@ -1,12 +1,22 @@
 package com.example.z_lw.aaaa;
 
 import android.content.Context;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 /**
@@ -49,7 +59,7 @@ public class GridViewAdapter extends BaseAdapter {
         }else {
             grideViewHolder = (GrideViewHolder) convertView.getTag();
         }
-        grideViewHolder.imageView.setImageResource(R.mipmap.ic_launcher);
+        grideViewHolder.imageView.setImageResource(R.mipmap.timg);
         return convertView;
     }
     class GrideViewHolder{

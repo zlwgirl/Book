@@ -8,29 +8,30 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
+
         <activity android:name=".WelComeActivity">
-=======
+
         <!--系统相册-->
         <uses-permission android:name="android.permission.CAMERA" />
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-        <activity android:name=".MainActivity">
->>>>>>> d5794bb80ccdd8b54cf9946efc9b4328aa0d8707
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity android:name=".MainActivity"/>
-        <activity android:name=".DetailsActivity"/>
-=======
+        <activity android:name=".FreeDetailsActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".MyMoney"/>
         <activity android:name=".MyMessageActicity"/>
->>>>>>> d5794bb80ccdd8b54cf9946efc9b4328aa0d8707
+        <activity android:name=".PayDetailsActivity"/>
+        <activity android:name=".SearchActivity"/>
+
     </application>
 
 </manifest>

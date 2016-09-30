@@ -1,5 +1,6 @@
 package com.example.z_lw.aaaa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
 /**
@@ -19,6 +21,7 @@ public class BookStoreFragment extends Fragment implements RadioGroup.OnCheckedC
     private RadioGroup radioGroup;
     private FreeFragment freeFragment;
     private PayFragment payFragment;
+    private ImageButton imageButton_search;
 
     @Nullable
     @Override
@@ -31,8 +34,19 @@ public class BookStoreFragment extends Fragment implements RadioGroup.OnCheckedC
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         radioGroup  = (RadioGroup) view.findViewById(R.id.radioGroup);
+        imageButton_search = (ImageButton) view.findViewById(R.id.imageButton_search);
         radioGroup.setOnCheckedChangeListener(this);
         radioGroup.check(R.id.radioButton_free);
+        //搜索按钮点击跳转
+        imageButton_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                getActivity().startActivity(intent);
+
+            }
+        });
+
     }
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {

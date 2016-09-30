@@ -1,6 +1,8 @@
 package com.example.z_lw.aaaa;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,7 @@ public class LookBookGvAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-       return pictures != null ? pictures.size():0;
+       return 3;
     }
     @Override
     public Object getItem(int position) {
@@ -41,20 +43,22 @@ public class LookBookGvAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.lookbook_gv_item,parent,false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_gridview,parent,false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         }else {
          viewHolder = (ViewHolder) convertView.getTag();
         }
-        Photo photo = (Photo) getItem(position);
-        viewHolder.imageView.setImageResource(photo.getImage());
+//        Photo photo = (Photo) getItem(position);
+        viewHolder.imageView.setImageResource(R.mipmap.timg);
+//        SharedPreferences preferences = context.getSharedPreferences("book",Context.MODE_PRIVATE);
+//        viewHolder.imageView.setImageResource(preferences.getInt("image",R.mipmap.ic_launcher));
         return convertView;
     }
     class ViewHolder{
         private ImageView imageView;
         public ViewHolder(View view){
-            imageView = (ImageView) view.findViewById(R.id.lookbook_gv_iv);
+            imageView = (ImageView) view.findViewById(R.id.imageView);
         }
     }
 }

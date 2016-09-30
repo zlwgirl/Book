@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         FragmentTransaction transaction = manager.beginTransaction();
         switch (i) {
             case R.id.radioButtonOne:
-                if (lookBookFragment == null) {
-                    lookBookFragment = new LookBookFragment();
-                }
-                transaction.replace(R.id.frameLayout, lookBookFragment);
+//                if (lookBookFragment == null) {
+//                    lookBookFragment = new LookBookFragment();
+//                }
+                transaction.replace(R.id.frameLayout, new LookBookFragment());
                 break;
             case R.id.radioButtonTwo:
                 if (bookStoreFragment == null) {
