@@ -40,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Z-LW on 2016/9/26.
  */
 public class LookBookFragment extends Fragment implements View.OnClickListener {
-    private Button bookBtn;
+    private TextView bookBtn;
     private GridView gridView;
     private LookBookGvAdapter gvAdapter;
     private List<Photo> photo;
@@ -69,7 +69,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bookBtn = (Button) view.findViewById(R.id.lookbook_bt_title);
+        bookBtn = (TextView) view.findViewById(R.id.lookbook_bt_title);
         gridView = (GridView) view.findViewById(R.id.lookbook_gv);
         drawerLayout = (DrawerLayout) view.findViewById(R.id.drawlayout);
         circleImageView = (CircleImageView) view.findViewById(R.id.drawerlayout_cr_photo);
