@@ -101,17 +101,17 @@ public class FreeFragment extends Fragment implements AdapterView.OnItemClickLis
                 return true;
             }
         });
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                        try {
-                            Thread.sleep(3000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        handler.sendEmptyMessage(0);
-                    }
-            }).start();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                        try {
+//                            Thread.sleep(3000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        handler.sendEmptyMessage(0);
+//                    }
+//            }).start();
 
     }
     @Override

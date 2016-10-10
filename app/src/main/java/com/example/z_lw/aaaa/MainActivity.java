@@ -10,6 +10,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private RadioGroup radioGroup;
     private LookBookFragment lookBookFragment;
     private BookStoreFragment bookStoreFragment;
+    private GoodFriendFragment goodFriendFragment;
+    private ZoneFragment zoneFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +28,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         FragmentTransaction transaction = manager.beginTransaction();
         switch (i) {
             case R.id.radioButtonOne:
-//                if (lookBookFragment == null) {
-//                    lookBookFragment = new LookBookFragment();
-//                }
+                if (lookBookFragment == null) {
+                    lookBookFragment = new LookBookFragment();
+                }
                 transaction.replace(R.id.frameLayout, new LookBookFragment());
                 break;
             case R.id.radioButtonTwo:
@@ -36,6 +38,18 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     bookStoreFragment = new BookStoreFragment();
                 }
                 transaction.replace(R.id.frameLayout, bookStoreFragment);
+                break;
+            case R.id.radioButtonThree:
+                if (goodFriendFragment == null) {
+                    goodFriendFragment = new GoodFriendFragment();
+                }
+                transaction.replace(R.id.frameLayout, goodFriendFragment);
+                break;
+            case R.id.radioButtonFour:
+                if (zoneFragment == null) {
+                   zoneFragment = new ZoneFragment();
+                }
+                transaction.replace(R.id.frameLayout, zoneFragment);
                 break;
         }
         transaction.commit();

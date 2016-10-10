@@ -3,38 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/background"
     android:orientation="vertical"
-    tools:context="com.example.z_lw.aaaa.MainActivity"
-    android:background="@mipmap/background">
+    tools:context="com.example.z_lw.aaaa.MainActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
+
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
+
         <RadioButton
-            android:drawableTop="@drawable/book_btn"
             android:id="@+id/radioButtonOne"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:text="看书"
-            android:gravity="center" />
+            android:drawableTop="@drawable/book_btn"
+            android:gravity="center"
+            android:text="看书" />
+
         <RadioButton
-            android:drawableTop="@drawable/boostore_btn"
             android:id="@+id/radioButtonTwo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:text="书城"
+            android:drawableTop="@drawable/boostore_btn"
             android:gravity="center"
-          />
+            android:text="书城" />
+
+        <RadioButton
+            android:id="@+id/radioButtonThree"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:drawableTop="@drawable/goodfriend_btn"
+            android:text="好友" />
+        <RadioButton
+            android:id="@+id/radioButtonFour"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:drawableTop="@drawable/zone_btn"
+            android:text="空间" />
     </RadioGroup>
 </LinearLayout>

@@ -16,14 +16,18 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
 
                 <TextView
                     android:id="@+id/lookbook_bt_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="我" />
+                    android:text="我"
+                    android:textSize="17dp"
+                    android:textColor="#87CEFF"
+                    />
 
                 <TextView
                     android:id="@+id/textView"
