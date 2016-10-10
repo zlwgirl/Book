@@ -34,25 +34,30 @@
         android:layout_height="1dp"
         android:background="#d6d6d6" />
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-        <TextView
-            android:id="@+id/bookstore_textView"
-            android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="内容为空"/>
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/bookstore_textView"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:text="点击加载内容"
+                android:padding="10dp"
+                android:textSize="15sp"/>
+        </ScrollView>
         <Button
             android:id="@+id/button_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
             android:layout_gravity="right|bottom"
             android:text="下载"
-            />
-
-    </FrameLayout>
-
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
 </LinearLayout>

@@ -1,12 +1,14 @@
 package com.example.z_lw.aaaa;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -19,9 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,8 +31,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -41,16 +43,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class LookBookFragment extends Fragment implements View.OnClickListener {
     private TextView bookBtn;
-    private GridView gridView;
-    private LookBookGvAdapter gvAdapter;
-    private List<Photo> photo;
     private DrawerLayout drawerLayout;
     private CircleImageView circleImageView;
     private Button btn_picture, btn_cancle;
     private SharedPreferences.Editor editor;
     private TextView setTv, myMessage, money;
-    private ImageView loginIm;
+    private ImageView loginIm,imageView_look;
     private TextView userName ;
+    private String imageurl;
 
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
@@ -70,7 +70,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bookBtn = (TextView) view.findViewById(R.id.lookbook_bt_title);
-        gridView = (GridView) view.findViewById(R.id.lookbook_gv);
         drawerLayout = (DrawerLayout) view.findViewById(R.id.drawlayout);
         circleImageView = (CircleImageView) view.findViewById(R.id.drawerlayout_cr_photo);
         setTv = (TextView) view.findViewById(R.id.tv_set);
@@ -78,15 +77,17 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         money = (TextView) view.findViewById(R.id.my_money);
         loginIm = (ImageView) view.findViewById(R.id.login_im);
         userName = (TextView) view.findViewById(R.id.username_tv);
+        imageView_look = (ImageView) view.findViewById(R.id.look_imageView);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        photo = new ArrayList<>();
-        gvAdapter = new LookBookGvAdapter(getContext());
-        gvAdapter.setPictures(photo);
-        gridView.setAdapter(gvAdapter);
+        //接受书城页面传过来的网址SP
+        SharedPreferences preferences = getActivity().getSharedPreferences("download", Context.MODE_PRIVATE);
+        imageurl = preferences.getString("url","http://58pic.ooopic.com/58pic/14/70/68/34858PIC6sf.jpg");
+
+        new MyAsync().execute(imageurl);
 
         SharedPreferences spPicture = getActivity().getSharedPreferences("Picture", getActivity().MODE_PRIVATE);
         editor = spPicture.edit();
@@ -105,15 +106,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-// grideview的监听事件
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(), GrideViewDetailActivity.class);
-                startActivity(intent);
-
-            }
-        });
         // 头像的点击
         circleImageView.setOnClickListener(this);
         // 设置点击
@@ -273,6 +265,40 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         intent.putExtra("outputY", 150);
         intent.putExtra("return-data", true);
         startActivityForResult(intent, 3);
+    }
+    //异步任务将图片显示在imageview上
+    class MyAsync extends AsyncTask<String,Void,Bitmap>{
+        URL url = null;
+        HttpURLConnection connection = null;
+        InputStream stream = null;
+        Bitmap bitmap = null;
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            try {
+                url = new URL(strings[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                stream = connection.getInputStream();
+                bitmap = BitmapFactory.decodeStream(stream);
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                stream.close();
+                connection.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            imageView_look.setImageBitmap(bitmap);
+        }
     }
 
 
