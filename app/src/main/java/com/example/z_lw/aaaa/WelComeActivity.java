@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -18,7 +17,7 @@ public class WelComeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         textView = (TextView) findViewById(R.id.textView);
-        timer = new CountDownTimer(5000,1000) {
+        timer = new CountDownTimer(3000,1000) {
             @Override
             public void onTick(long l) {
                 textView.setText(l/1000+"秒后跳转");

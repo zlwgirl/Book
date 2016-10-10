@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,15 +25,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -161,18 +157,28 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         dialog.show();
         btn_picture = (Button) window.findViewById(R.id.btn_picture);
         btn_cancle = (Button) window.findViewById(R.id.btn_cancle);
+//        btn_photo = (Button) window.findViewById(R.id.btn_photo);
         // 相册
+//        btn_picture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intentFromGallery = new Intent();
+//                // 设置文件类型
+//                intentFromGallery.setType("image/*");//选择图片
+//                intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+////如果你想在Activity中得到新打开Activity关闭后返回的数据，
+////你需要使用系统提供的startActivityForResult(Intent intent,int requestCode)方法打开新的Activity
+//                startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
+//
+//                dialog.dismiss();
+//            }
+//        });
         btn_picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentFromGallery = new Intent();
-                // 设置文件类型
-                intentFromGallery.setType("image/*");//选择图片
-                intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
-//如果你想在Activity中得到新打开Activity关闭后返回的数据，
-//你需要使用系统提供的startActivityForResult(Intent intent,int requestCode)方法打开新的Activity
-                startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
-
+                Intent intent1 = new Intent(Intent.ACTION_PICK, null);
+                intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent1, 1);
                 dialog.dismiss();
             }
         });
@@ -182,24 +188,31 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
                 dialog.dismiss();
             }
         });
+//        // 相机
+//        btn_photo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "head.jpg")));
+//                startActivityForResult(intent2, CODE_GALLERY_REQUEST);// 采用ForResult打开
+//                dialog.dismiss();
+//            }
+//        });
     }
 
-
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-
-// 用户没有进行有效的设置操作，返回
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 用户没有进行有效的设置操作，返回
         if (resultCode == getActivity().RESULT_CANCELED) {//取消
             Toast.makeText(getActivity().getApplication(), "取消", Toast.LENGTH_LONG).show();
             return;
         }
         switch (requestCode) {
-            case CODE_GALLERY_REQUEST:
+            case 1:
                 if (resultCode == getActivity().RESULT_OK) {
-                    cropPhoto(intent.getData());// 裁剪图片
-                }//如果是来自本地的
-//                cropPhoto(intent.getData());//直接裁剪图片
-                Uri selectdeImage = intent.getData();
+                    cropPhoto(data.getData());// 裁剪图片
+                }
+                Uri selectdeImage = data.getData();
                 Cursor cursor = getActivity().getContentResolver().query(selectdeImage, null, null, null, null);
                 while (cursor.moveToNext()) {
                     String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
@@ -209,43 +222,76 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
                 }
                 cursor.close();
                 break;
-            case CODE_RESULT_REQUEST:
-                if (intent != null) {
-                    setImageToHeadView(intent);//设置图片框
-                }
-                break;
-        }
-
-    }
-
-    /**
-     * 提取保存裁剪之后的图片数据，并设置头像部分的View
-     */
-    private void setImageToHeadView(Intent intent) {
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
-            circleImageView.setImageBitmap(photo);
-            //新建文件夹 先选好路径 再调用mkdir函数 现在是根目录下面的Ask文件夹
-            File nf = new File(Environment.getExternalStorageDirectory() + "/Ask");
-            nf.mkdir();
-            //在根目录下面的ASk文件夹下 创建okkk.jpg文件
-            File f = new File(Environment.getExternalStorageDirectory() + "/Ask", "okkk.jpg");
-            FileOutputStream out = null;
-            try {//打开输出流 将图片数据填入文件中
-                out = new FileOutputStream(f);
-                photo.compress(Bitmap.CompressFormat.PNG, 90, out);
-                try {
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+//            case 2:
+//                if (resultCode == getActivity().RESULT_OK) {
+//                    File temp = new File(Environment.getExternalStorageDirectory() + "/head.jpg");
+//                    cropPhoto(Uri.fromFile(temp));// 裁剪图片
+//                }
+//                break;
         }
     }
+
+//    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        super.onActivityResult(requestCode, resultCode, intent);
+//
+//// 用户没有进行有效的设置操作，返回
+//        if (resultCode == getActivity().RESULT_CANCELED) {//取消
+//            Toast.makeText(getActivity().getApplication(), "取消", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+//        switch (requestCode) {
+//            case CODE_GALLERY_REQUEST:
+//                if (resultCode == getActivity().RESULT_OK) {
+//                    cropPhoto(intent.getData());// 裁剪图片
+//                }//如果是来自本地的
+////                cropPhoto(intent.getData());//直接裁剪图片
+//                Uri selectdeImage = intent.getData();
+//                Cursor cursor = getActivity().getContentResolver().query(selectdeImage, null, null, null, null);
+//                while (cursor.moveToNext()) {
+//                    String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+//                    circleImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+//                    editor.putString("tu", path);
+//                    editor.commit();
+//                }
+//                cursor.close();
+//                break;
+//            case CODE_RESULT_REQUEST:
+//                if (intent != null) {
+//                    setImageToHeadView(intent);//设置图片框
+//                }
+//                break;
+//        }
+//
+//    }
+//
+//    /**
+//     * 提取保存裁剪之后的图片数据，并设置头像部分的View
+//     */
+//    private void setImageToHeadView(Intent intent) {
+//        Bundle extras = intent.getExtras();
+//        if (extras != null) {
+//            Bitmap photo = extras.getParcelable("data");
+//            circleImageView.setImageBitmap(photo);
+//            //新建文件夹 先选好路径 再调用mkdir函数 现在是根目录下面的Ask文件夹
+//            File nf = new File(Environment.getExternalStorageDirectory() + "/Ask");
+//            nf.mkdir();
+//            //在根目录下面的ASk文件夹下 创建okkk.jpg文件
+//            File f = new File(Environment.getExternalStorageDirectory() + "/Ask", "okkk.jpg");
+//            FileOutputStream out = null;
+//            try {//打开输出流 将图片数据填入文件中
+//                out = new FileOutputStream(f);
+//                photo.compress(Bitmap.CompressFormat.PNG, 90, out);
+//                try {
+//                    out.flush();
+//                    out.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 
     /**
