@@ -18,7 +18,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp">
-
                 <ImageView
                     android:id="@+id/lookbook_im_title"
                     android:layout_width="50dp"
@@ -26,6 +25,14 @@
                     android:src="@mipmap/icon"
                     android:textSize="17dp" />
 
+                <TextView
+                    android:id="@+id/lookbook_bt_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#87CEFF"
+                    android:layout_margin="10dp"
+                    android:text="我"
+                    android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
@@ -40,12 +47,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#d6d6d6" />
-
-            <GridView
-                android:id="@+id/lookbook_gv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:numColumns="3" />
+                android:layout_height="150dp"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+                <ImageView
+                    android:id="@+id/look_imageView"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp" />
+            </LinearLayout>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="230dp"
