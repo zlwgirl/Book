@@ -2,137 +2,119 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg_regist"
     android:orientation="vertical">
 
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="40dp"-->
-    <!--android:gravity="center"-->
-    <!--android:text="注册"-->
-    <!--android:textColor="#ffffff"-->
-    <!--android:textSize="30sp"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="150dp"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/register_et_username"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@mipmap/login_edittext"-->
-    <!--android:hint="请输入账号"-->
-    <!--android:padding="10dp"-->
-    <!--android:textColor="#ffffff"-->
-    <!--android:textColorHint="#ffffff" />-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/register_et_password"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="10dp"-->
-    <!--android:background="@mipmap/login_edittext"-->
-    <!--android:hint="请输入密码"-->
-    <!--android:padding="10dp"-->
-    <!--android:textColor="#ffffff"-->
-    <!--android:textColorHint="#ffffff" />-->
-    <!--</LinearLayout>-->
-
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="20dp">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/register_login_btn"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="87dp"-->
-    <!--android:layout_marginStart="87dp"-->
-    <!--android:text="登录" />-->
-
-    <!--<Button-->
-    <!--android:id="@+id/register_btn"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="24dp"-->
-    <!--android:layout_toRightOf="@id/register_login_btn"-->
-    <!--android:text="注册" />-->
-    <!--</RelativeLayout>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入账号"
-        android:textColor="#000000"
+        android:layout_marginTop="10dp"
+        android:background="@mipmap/login_edittext"
         android:digits="0123456789"
-        />
+        android:hint="请输入账号"
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff" />
 
     <EditText
         android:id="@+id/password"
+        android:textColor="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@mipmap/login_edittext"
+        android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM"
         android:hint="请输入密码"
-        android:textColor="#000000"
-        android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM"/>
+        android:padding="10dp"
+        android:textColorHint="#ffffff" />
 
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@mipmap/login_edittext"
         android:hint="请输入名字"
-        android:textColor="#000000" />
+        android:padding="10dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff" />
 
     <EditText
         android:id="@+id/phone"
+        android:textColor="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@mipmap/login_edittext"
+        android:digits="0123456789"
         android:hint="请输入电话"
-        android:textColor="#000000"
-        android:digits="0123456789"/>
+        android:padding="10dp"
+        android:textColorHint="#ffffff" />
 
     <EditText
         android:id="@+id/age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@mipmap/login_edittext"
+        android:digits="0123456789"
         android:hint="请输入年龄"
-        android:textColor="#000000"
-        android:digits="0123456789"/>
+        android:textColor="#ffffff"
+        android:padding="10dp"
+        android:textColorHint="#ffffff" />
 
     <EditText
         android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入 地址"
-        android:textColor="#000000" />
+        android:layout_marginTop="10dp"
+        android:background="@mipmap/login_edittext"
+        android:hint="请输入地址"
+        android:padding="10dp"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"/>
+
     <RadioGroup
         android:id="@+id/rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:checkedButton="@+id/rb_man"
         android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rb_man"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="男" />
 
         <RadioButton
             android:id="@+id/rb_woman"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="女" />
 
     </RadioGroup>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button
@@ -140,7 +122,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_change"
             android:text="注册" />
 
         <Button
@@ -148,7 +129,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_change"
             android:text="取消" />
 
     </LinearLayout>

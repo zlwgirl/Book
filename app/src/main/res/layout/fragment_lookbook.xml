@@ -19,15 +19,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp">
 
-                <TextView
-                    android:id="@+id/lookbook_bt_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="我"
-                    android:textSize="17dp"
-                    android:textColor="#87CEFF"
-                    />
+                <ImageView
+                    android:id="@+id/lookbook_im_title"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/icon"
+                    android:textSize="17dp" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -50,11 +47,17 @@
                 android:layout_height="match_parent"
                 android:numColumns="3" />
         </LinearLayout>
-
-        <include
-            layout="@layout/drawerlayout_item"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="230dp"
             android:layout_height="match_parent"
-            android:layout_gravity="left" />
+            android:clickable="true"
+            android:layout_gravity="left"
+            >
+            <include
+                layout="@layout/drawerlayout_item"
+                android:layout_width="230dp"
+                android:layout_height="match_parent"
+                />
+        </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
