@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * Created by Z-LW on 2016/9/28.
+ * 登录页面
  */
 public class LoginActivity extends Activity implements View.OnClickListener {
     private Button loginBtn, registerBtn;

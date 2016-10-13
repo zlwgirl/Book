@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 /**
  * Created by Z-LW on 2016/10/6.
+ * 好友页面
  */
 public class GoodFriendFragment extends Fragment {
 

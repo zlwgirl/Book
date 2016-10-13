@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 /**
  * Created by Administrator on 2016/9/28.
+ * 欢迎页
  */
 public class WelComeActivity extends Activity {
     private CountDownTimer timer;

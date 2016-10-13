@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,6 +26,7 @@ import java.net.URL;
 
 /**
  * Created by Z-LW on 2016/9/26.
+ * 看书页面
  */
 public class LookBookFragment extends Fragment implements View.OnClickListener {
     private TextView bookBtn;
@@ -39,6 +39,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
     private ImageView loginIm,imageView_look;
     private TextView userName ;
     private String imageurl;
+    private TextView upLoad;
 
     /* 头像文件 */
 //    private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
@@ -65,6 +66,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         loginTv = (TextView) view.findViewById(R.id.login_tv);
         userName = (TextView) view.findViewById(R.id.username_tv);
         imageView_look = (ImageView) view.findViewById(R.id.look_imageView);
+        upLoad = (TextView) view.findViewById(R.id.upload);
     }
 
     @Override
@@ -117,6 +119,10 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
             case R.id.login_tv:
                 Intent intentLogin = new Intent(getContext(), LoginActivity.class);
                 startActivity(intentLogin);
+                break;
+            case R.id.upload:
+                Intent intentUpLoad = new Intent(getContext(),UpLoadActivity.class);
+                startActivity(intentUpLoad);
                 break;
         }
     }
@@ -188,7 +194,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
     /**
      * 调用系统的裁剪
      *
-     * @param uri
+//     * @param uri
      */
 //    public void cropPhoto(Uri uri) {
 //        Intent intent = new Intent("com.android.camera.action.CROP");
@@ -203,19 +209,19 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
 //        intent.putExtra("return-data", true);
 //        startActivityForResult(intent, 3);
 //    }
-    public void cropPhoto(Uri uri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 150);
-        intent.putExtra("outputY", 150);
-        intent.putExtra("return-data", true);
-        startActivityForResult(intent, 3);
-    }
+//    public void cropPhoto(Uri uri) {
+//        Intent intent = new Intent("com.android.camera.action.CROP");
+//        intent.setDataAndType(uri, "image/*");
+//        intent.putExtra("crop", "true");
+//        // aspectX aspectY 是宽高的比例
+//        intent.putExtra("aspectX", 1);
+//        intent.putExtra("aspectY", 1);
+//        // outputX outputY 是裁剪图片宽高
+//        intent.putExtra("outputX", 150);
+//        intent.putExtra("outputY", 150);
+//        intent.putExtra("return-data", true);
+//        startActivityForResult(intent, 3);
+//    }
     //异步任务将图片显示在imageview上
     class MyAsync extends AsyncTask<String,Void,Bitmap>{
         URL url = null;
