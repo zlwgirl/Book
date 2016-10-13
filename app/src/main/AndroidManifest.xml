@@ -27,7 +27,6 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".FreeDetailsActivity"/>
         <activity android:name=".SettingActivity"/>
-        <activity android:name=".MyMoney"/>
         <activity android:name=".MyMessageActicity"/>
         <activity android:name=".PayDetailsActivity"/>
         <activity android:name=".SearchActivity"/>
