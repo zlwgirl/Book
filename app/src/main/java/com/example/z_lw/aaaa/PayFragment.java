@@ -1,6 +1,8 @@
 package com.example.z_lw.aaaa;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import net.tsz.afinal.core.AsyncTask;
 
@@ -41,51 +45,18 @@ public class PayFragment extends Fragment {
         imageView_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences.Editor sp = getActivity().getSharedPreferences("paypicture", Context.MODE_PRIVATE).edit();
+                sp.putString("pay","http://139.129.215.221:8080/images/wyoos.png");
+                sp.commit();
                 Intent intent = new Intent(getContext(),PayDetailsActivity.class);
                 getActivity().startActivity(intent);
             }
         });
     }
-
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        new MyAsyncTask().execute("http://139.129.215.221:8080/images/wyoos.png");
-
+        Picasso.with(getContext()).load("http://139.129.215.221:8080/images/wyoos.png").into(imageView_pay);
     }
-    class MyAsyncTask extends AsyncTask<String,Void,Bitmap>{
-        URL url = null;
-        HttpURLConnection connection = null;
-        InputStream stream = null;
-        Bitmap bitmap = null;
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            try {
-                url = new URL(strings[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                stream = connection.getInputStream();
-                bitmap = BitmapFactory.decodeStream(stream);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                stream.close();
-                connection.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            imageView_pay.setImageBitmap(bitmap);
-        }
-    }
-
 
 }

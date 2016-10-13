@@ -28,4 +28,6 @@ dependencies {
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     compile 'com.google.code.gson:gson:2.2.4'
     compile files('libs/afinal_0.5.1_bin.jar')
+    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
+    compile 'com.squareup.picasso:picasso:2.3.2'
 }

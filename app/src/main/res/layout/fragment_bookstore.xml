@@ -22,11 +22,13 @@
                 android:text="免费"
                 android:button="@null"
                 android:textSize="20sp"
-                android:gravity="center" />
+                android:gravity="center"
+                android:background="@drawable/radiogroup_selector"
+                android:textColor="@drawable/color_radiobutton"/>
             <View
                 android:layout_width="0.8dp"
                 android:layout_height="match_parent"
-                android:background="#000000"/>
+                android:background="#999999"/>
             <RadioButton
                 android:id="@+id/radioButton_pay"
                 android:layout_width="0dp"
@@ -35,7 +37,9 @@
                 android:text="付费"
                 android:button="@null"
                 android:textSize="20sp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:background="@drawable/radiogroup_selector"
+                android:textColor="@drawable/color_radiobutton"/>
         </RadioGroup>
         <ImageButton
             android:id="@+id/imageButton_search"

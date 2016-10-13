@@ -39,6 +39,19 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
+        <Button
+            android:id="@+id/button_down"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="right|bottom"
+            android:text="点击下载本书"
+            android:layout_margin="5dp"/>
+        <!--<com.joanzapata.pdfview.PDFView-->
+            <!--android:id="@+id/pdfView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:padding="5dp"/>-->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -52,12 +65,12 @@
                 android:padding="10dp"
                 android:textSize="15sp"/>
         </ScrollView>
-        <Button
-            android:id="@+id/button_down"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_gravity="right|bottom"
-            android:text="下载"
-            android:layout_marginRight="10dp"/>
+        <!--<Button-->
+            <!--android:id="@+id/button_down"-->
+            <!--android:layout_width="70dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_gravity="right|bottom"-->
+            <!--android:text="下载"-->
+            <!--android:layout_marginRight="10dp"/>-->
     </LinearLayout>
 </LinearLayout>

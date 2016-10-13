@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.joanzapata.pdfview.PDFView;
+import com.joanzapata.pdfview.listener.OnPageChangeListener;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,19 +34,24 @@ public class FreeDetailsActivity extends AppCompatActivity {
     private boolean flag  = false;
     private Handler handler;
     private TextView textView;
+    //书本内容的网址
     private String sourceUrl = "http://139.129.215.221:8080/books/test.txt";
     private URL url;
     private HttpURLConnection connection;
     private InputStream is;
-    private String imageurl = "http://139.129.215.221:8080/images/wyoos.png";
+//    private boolean choose = false;
+    //高数书的封面网址
+    private String imageurl = "http://139.129.215.221:8080/images/AdvancedMathematics.png";
     private BufferedReader bufferedReader;
     private StringBuffer buffer = new StringBuffer();
+//    private PDFView pdfView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freedetails);
         textView = (TextView) findViewById(R.id.bookstore_textView);
+//        pdfView = (PDFView) findViewById(R.id.pdfView);
         button_back = (Button) findViewById(R.id.button_back);
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +76,7 @@ public class FreeDetailsActivity extends AppCompatActivity {
                                 String expandName = sourceUrl.substring(sourceUrl.lastIndexOf(".") + 1, sourceUrl.length()).toLowerCase();
                                 //获取文件名
                                 String fileName = sourceUrl.substring(sourceUrl.lastIndexOf("/") + 1, sourceUrl.lastIndexOf("."));
-                                File file = new File("sdcard/Download/" + fileName + "." + expandName);
+                                File file = new File("sdcard/" + fileName + "." + expandName);
                                 FileOutputStream fos = new FileOutputStream(file);
                                 byte buf[] = new byte[1024];
                                 while (true) {
@@ -100,6 +108,7 @@ public class FreeDetailsActivity extends AppCompatActivity {
                 sp.commit();
             }
         });
+
         handler  = new Handler() {
             @Override
             public void handleMessage(Message msg) {

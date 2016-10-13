@@ -25,6 +25,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -73,7 +76,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         money = (TextView) view.findViewById(R.id.my_money);
         loginIm = (ImageView) view.findViewById(R.id.login_im);
         userName = (TextView) view.findViewById(R.id.username_tv);
-        imageView_look = (ImageView) view.findViewById(R.id.look_imageView);
+        imageView_look = (ImageView) view.findViewById(R.id.look_imageViewOne);
     }
 
     @Override
@@ -82,8 +85,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         //接受书城页面传过来的网址SP
         SharedPreferences preferences = getActivity().getSharedPreferences("download", Context.MODE_PRIVATE);
         imageurl = preferences.getString("url","http://58pic.ooopic.com/58pic/14/70/68/34858PIC6sf.jpg");
-
-        new MyAsync().execute(imageurl);
+        Picasso.with(getContext()).load(imageurl).into(imageView_look);
 
         SharedPreferences spPicture = getActivity().getSharedPreferences("Picture", getActivity().MODE_PRIVATE);
         editor = spPicture.edit();
@@ -312,41 +314,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         intent.putExtra("return-data", true);
         startActivityForResult(intent, 3);
     }
-    //异步任务将图片显示在imageview上
-    class MyAsync extends AsyncTask<String,Void,Bitmap>{
-        URL url = null;
-        HttpURLConnection connection = null;
-        InputStream stream = null;
-        Bitmap bitmap = null;
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            try {
-                url = new URL(strings[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                stream = connection.getInputStream();
-                bitmap = BitmapFactory.decodeStream(stream);
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                stream.close();
-                connection.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            imageView_look.setImageBitmap(bitmap);
-        }
-    }
-
 
 }
 
