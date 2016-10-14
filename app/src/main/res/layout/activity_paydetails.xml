@@ -27,38 +27,38 @@
         android:background="#d6d6d6" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="horizontal">
+        android:layout_height="130dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
         <ImageView
+            android:id="@+id/pay_imageView_details"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="15dp"
-            android:src="@mipmap/mine"/>
+            android:layout_height="130dp"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:text="书名：自己做系统" />
+                android:text="书名：自己动手做系统" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="价格：一元"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="15dp"/>
             <Button
                 android:id="@+id/button_pay"
                 android:layout_width="150dp"
                 android:layout_height="30dp"
                 android:background="#ffffff"
                 android:text="购买"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="20dp"/>
         </LinearLayout>
     </LinearLayout>
     <View

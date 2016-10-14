@@ -53,9 +53,15 @@
                 android:orientation="horizontal"
                 android:layout_margin="10dp">
                 <ImageView
-                    android:id="@+id/look_imageView"
+                    android:id="@+id/look_imageViewOne"
                     android:layout_width="100dp"
-                    android:layout_height="150dp" />
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/none"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/look_imageViewTwo"-->
+                    <!--android:layout_width="100dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginLeft="10dp" />-->
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout

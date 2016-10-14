@@ -3,6 +3,7 @@ package com.example.z_lw.aaaa;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +20,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.ViewFlipper;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,15 +34,10 @@ import java.net.URL;
 /**
  * Created by Administrator on 2016/9/27.
  */
-public class FreeFragment extends Fragment implements AdapterView.OnItemClickListener, RadioGroup.OnCheckedChangeListener {
-    private ViewPager viewPager;
-    private RadioGroup radioGroup;
-    private MyAdapter myAdapter;
-    private RadioButton radioButton_one,radioButton_two,radioButton_three,radioButton_four;
-    private Handler handler;
+public class FreeFragment extends Fragment {
     private ImageView imageView_one,imageView_two;
-    private int[] images ={R.drawable.cycle1,R.drawable.cycle2,R.drawable.cycle3,R.drawable.cycle4};
-
+    private ViewFlipper flipper;
+    private int[] imageId ={R.drawable.cycle1,R.drawable.cycle2,R.drawable.cycle3,R.drawable.cycle4};
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_free,null);
@@ -49,23 +47,23 @@ public class FreeFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewPager = (ViewPager) view.findViewById(R.id.viewpager_cycle);
-        radioGroup = (RadioGroup) view.findViewById(R.id.cycle_rg);
-        radioButton_one = (RadioButton) view.findViewById(R.id.rb_one);
-        radioButton_two = (RadioButton) view.findViewById(R.id.rb_two);
-        radioButton_three = (RadioButton) view.findViewById(R.id.rb_three);
-        radioButton_four = (RadioButton) view.findViewById(R.id.rb_four);
+        flipper = (ViewFlipper) view.findViewById(R.id.flipper);
         imageView_one = (ImageView) view.findViewById(R.id.imageView_one);
         imageView_two = (ImageView) view.findViewById(R.id.imageView_two);
-
-
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        myAdapter = new MyAdapter(getChildFragmentManager());
-        radioGroup.setOnCheckedChangeListener(this);
-        viewPager.setAdapter(myAdapter);
+        //实现轮播图
+        for (int i = 0; i < imageId.length; i++) {
+            flipper.addView(getImageView(imageId[i]));
+        }
+//        flipper.setInAnimation(getContext(),R.anim.cycle_in);
+//        flipper.setOutAnimation(getContext(),R.anim.cycle_out);
+        //轮播图时间
+        flipper.setFlipInterval(3000);
+        flipper.startFlipping();
+
         //点击封面书，跳转到详情界面
         imageView_one.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,130 +72,14 @@ public class FreeFragment extends Fragment implements AdapterView.OnItemClickLis
                 getActivity().startActivity(intent);
             }
         });
-        new MyAsyntask().execute("http://139.129.215.221:8080/images/wyoos.png",
-                "http://139.129.215.221:8080/images/AdvancedMathematics.png");
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position){
-                    case 0:
-                        radioButton_one = (RadioButton) getView().findViewById(R.id.rb_one);
-                        radioButton_one.setChecked(true);
-                        break;
-                    case 1:
-                        radioButton_two = (RadioButton) getView().findViewById(R.id.rb_two);
-                        radioButton_two.setChecked(true);
-                        break;
-                    case 2:
-                        radioButton_three = (RadioButton) getView().findViewById(R.id.rb_three);
-                        radioButton_three.setChecked(true);
-                        break;
-                    case 3:
-                        radioButton_four = (RadioButton) getView().findViewById(R.id.rb_four);
-                        radioButton_four.setChecked(true);
-                        break;
-                }
-
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-        handler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message message) {
-                viewPager.setCurrentItem(viewPager.getCurrentItem());
-                return true;
-            }
-        });
-        //开线程，轮播图轮播时间
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                        try {
-//                            Thread.sleep(3000);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                        handler.sendEmptyMessage(0);
-//                    }
-//            }).start();
-
+        //加载图书封面图片
+        Picasso.with(getContext()).load("http://139.129.215.221:8080/images/AdvancedMathematics.png").into(imageView_one);
+        Picasso.with(getContext()).load("http://139.129.215.221:8080/images/wyoos.png").into(imageView_two);
     }
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent = new Intent(getContext(),FreeDetailsActivity.class);
-        getActivity().startActivity(intent);
-
-    }
-
-
-    @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        switch (i){
-            case R.id.rb_one:
-                viewPager.setCurrentItem(0);
-                break;
-            case R.id.rb_two:
-                viewPager.setCurrentItem(1);
-                break;
-            case R.id.rb_three:
-                viewPager.setCurrentItem(2);
-                break;
-            case R.id.rb_four:
-                viewPager.setCurrentItem(3);
-                break;
-        }
-    }
-
-    class MyAsyntask extends AsyncTask<String,Void ,Bitmap> {
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            URL url = null;
-            HttpURLConnection connection = null;
-            InputStream stream = null;
-            Bitmap bitmap = null;
-            try {
-                url = new URL(strings[1]);
-                connection = (HttpURLConnection) url.openConnection();
-                stream = connection.getInputStream();
-                bitmap = BitmapFactory.decodeStream(stream);
-            } catch (MalformedURLException e) {
-                    e.printStackTrace();
-            } catch (IOException e) {
-                    e.printStackTrace();
-            }
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            imageView_one.setImageBitmap(bitmap);
-        }
-    }
-    class MyAdapter extends FragmentPagerAdapter{
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            ImageFragment imageFragment = new ImageFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt("res",images[position]);
-            imageFragment.setArguments(bundle);
-            return imageFragment;
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
+    public ImageView getImageView(int imageId ){
+        ImageView image = new ImageView(getContext());
+        image.setBackgroundResource(imageId);
+        return image;
     }
 }
 

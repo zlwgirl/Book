@@ -18,12 +18,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 /**
  * Created by Z-LW on 2016/9/26.
  * 看书页面
@@ -31,13 +32,13 @@ import java.net.URL;
 public class LookBookFragment extends Fragment implements View.OnClickListener {
     private TextView bookBtn;
     private DrawerLayout drawerLayout;
-//    private CircleImageView circleImageView;
+    //    private CircleImageView circleImageView;
     private Button btn_picture, btn_cancle;
     private SharedPreferences.Editor editor;
     private TextView loginTv;
     private TextView setTv, myMessage;
-    private ImageView loginIm,imageView_look;
-    private TextView userName ;
+    private ImageView loginIm, imageView_look;
+    private TextView userName;
     private String imageurl;
     private TextView upLoad;
 
@@ -67,65 +68,66 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         userName = (TextView) view.findViewById(R.id.username_tv);
         imageView_look = (ImageView) view.findViewById(R.id.look_imageView);
         upLoad = (TextView) view.findViewById(R.id.upload);
+        imageView_look = (ImageView) view.findViewById(R.id.look_imageViewOne);
     }
+        @Override
+        public void onActivityCreated (@Nullable Bundle savedInstanceState){
+            super.onActivityCreated(savedInstanceState);
+            //接受书城页面传过来的网址SP
+            SharedPreferences preferences = getActivity().getSharedPreferences("download", Context.MODE_PRIVATE);
+            imageurl = preferences.getString("url", "http://58pic.ooopic.com/58pic/14/70/68/34858PIC6sf.jpg");
+            Picasso.with(getContext()).load(imageurl).into(imageView_look);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //接受书城页面传过来的网址SP
-        SharedPreferences preferences = getActivity().getSharedPreferences("download", Context.MODE_PRIVATE);
-        imageurl = preferences.getString("url","http://58pic.ooopic.com/58pic/14/70/68/34858PIC6sf.jpg");
-        new MyAsync().execute(imageurl);
+
 
 //        SharedPreferences spPicture = getActivity().getSharedPreferences("Picture", getActivity().MODE_PRIVATE);
 //        editor = spPicture.edit();
 //        circleImageView.setImageBitmap(BitmapFactory.decodeFile(spPicture.getString("tu", " ")));
-        SharedPreferences spUsername = getActivity().getSharedPreferences("Register",getActivity().MODE_PRIVATE);
-        String name = spUsername.getString("userName","");
-        userName.setText(name);
+            SharedPreferences spUsername = getActivity().getSharedPreferences("Register", getActivity().MODE_PRIVATE);
+            String name = spUsername.getString("userName", "");
+            userName.setText(name);
 
 
 // 按钮点击弹出抽屉
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);// 锁定当前行
-        bookBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);// 锁定当前行
+            bookBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    drawerLayout.openDrawer(Gravity.LEFT);
+                }
+            });
 
-        // 头像的点击
+            // 头像的点击
 //        circleImageView.setOnClickListener(this);
-        // 设置点击
-        setTv.setOnClickListener(this);
-        myMessage.setOnClickListener(this);
-        loginTv.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+            // 设置点击
+            setTv.setOnClickListener(this);
+            myMessage.setOnClickListener(this);
+            loginTv.setOnClickListener(this);
+        }
+        @Override
+        public void onClick (View view){
+            switch (view.getId()) {
 //            case R.id.drawerlayout_cr_photo:
 //                showDiaLog();
 //                break;
-            case R.id.tv_set:
-                Intent intent = new Intent(getContext(), SettingActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.my_message:
-                Intent intentMessage = new Intent(getContext(), MyMessageActicity.class);
-                startActivity(intentMessage);
-                break;
-            case R.id.login_tv:
-                Intent intentLogin = new Intent(getContext(), LoginActivity.class);
-                startActivity(intentLogin);
-                break;
-            case R.id.upload:
-                Intent intentUpLoad = new Intent(getContext(),UpLoadActivity.class);
-                startActivity(intentUpLoad);
-                break;
+                case R.id.tv_set:
+                    Intent intent = new Intent(getContext(), SettingActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.my_message:
+                    Intent intentMessage = new Intent(getContext(), MyMessageActicity.class);
+                    startActivity(intentMessage);
+                    break;
+                case R.id.login_tv:
+                    Intent intentLogin = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intentLogin);
+                    break;
+                case R.id.upload:
+                    Intent intentUpLoad = new Intent(getContext(), UpLoadActivity.class);
+                    startActivity(intentUpLoad);
+                    break;
+            }
         }
-    }
 
 //    private void showDiaLog() {
 //        View view = LayoutInflater.from(getContext()).inflate(R.layout.photo_choose_dialog, null);
@@ -191,11 +193,11 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
 //    }
 
 
-    /**
-     * 调用系统的裁剪
-     *
-//     * @param uri
-     */
+        /**
+         * 调用系统的裁剪
+         *
+         //     * @param uri
+         */
 //    public void cropPhoto(Uri uri) {
 //        Intent intent = new Intent("com.android.camera.action.CROP");
 //        intent.setDataAndType(uri, "image/*");
@@ -209,6 +211,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
 //        intent.putExtra("return-data", true);
 //        startActivityForResult(intent, 3);
 //    }
+
 //    public void cropPhoto(Uri uri) {
 //        Intent intent = new Intent("com.android.camera.action.CROP");
 //        intent.setDataAndType(uri, "image/*");
@@ -222,40 +225,54 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
 //        intent.putExtra("return-data", true);
 //        startActivityForResult(intent, 3);
 //    }
-    //异步任务将图片显示在imageview上
-    class MyAsync extends AsyncTask<String,Void,Bitmap>{
-        URL url = null;
-        HttpURLConnection connection = null;
-        InputStream stream = null;
-        Bitmap bitmap = null;
+        //异步任务将图片显示在imageview上
+        class MyAsync extends AsyncTask<String, Void, Bitmap> {
+            URL url = null;
+            HttpURLConnection connection = null;
+            InputStream stream = null;
+            Bitmap bitmap = null;
 
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            try {
-                url = new URL(strings[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                stream = connection.getInputStream();
-                bitmap = BitmapFactory.decodeStream(stream);
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                try {
+                    url = new URL(strings[0]);
+                    connection = (HttpURLConnection) url.openConnection();
+                    stream = connection.getInputStream();
+                    bitmap = BitmapFactory.decodeStream(stream);
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    stream.close();
+                    connection.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
             }
-            try {
-                stream.close();
-                connection.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
 
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            imageView_look.setImageBitmap(bitmap);
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                imageView_look.setImageBitmap(bitmap);
+            }
         }
-    }
+//    public void cropPhoto(Uri uri) {
+//        Intent intent = new Intent("com.android.camera.action.CROP");
+//        intent.setDataAndType(uri, "image/*");
+//        intent.putExtra("crop", "true");
+//        // aspectX aspectY 是宽高的比例
+//        intent.putExtra("aspectX", 1);
+//        intent.putExtra("aspectY", 1);
+//        // outputX outputY 是裁剪图片宽高
+//        intent.putExtra("outputX", 150);
+//        intent.putExtra("outputY", 150);
+//        intent.putExtra("return-data", true);
+//        startActivityForResult(intent, 3);
+//    }
+
 
 
 }
