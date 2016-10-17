@@ -60,7 +60,18 @@
         android:text="我的资料"
         android:textColor="#ffffff"
         android:textSize="20dp" />
-
+    <TextView
+        android:id="@+id/upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/mip_upload"
+        android:drawablePadding="40dp"
+        android:text="上传"
+        android:textColor="#ffffff"
+        android:textSize="20sp"/>
     <TextView
         android:id="@+id/tv_set"
         android:layout_width="match_parent"

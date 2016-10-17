@@ -2,88 +2,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg_regist"
     android:orientation="vertical">
 
     <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:gravity="center"
+    android:text="个人注册"
+    android:textSize="30sp"
+    android:textStyle="bold" />
+    <TextView
+        android:id="@+id/reg_business"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="注册"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:text="企业注册"
+        android:textSize="14sp"
+        android:textColor="#FF7F24"/>
 
     <EditText
         android:id="@+id/account"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/login_edittext"
+        style="@style/register"
         android:digits="0123456789"
         android:hint="请输入账号"
-        android:padding="10dp"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff" />
+      />
 
     <EditText
         android:id="@+id/password"
-        android:textColor="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/login_edittext"
+       style="@style/register"
         android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM"
-        android:hint="请输入密码"
-        android:padding="10dp"
-        android:textColorHint="#ffffff" />
+        android:hint="请输入密码" />
 
     <EditText
         android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/login_edittext"
+        style="@style/register"
         android:hint="请输入名字"
-        android:padding="10dp"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff" />
+        />
 
     <EditText
         android:id="@+id/phone"
-        android:textColor="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/login_edittext"
+        style="@style/register"
         android:digits="0123456789"
         android:hint="请输入电话"
-        android:padding="10dp"
-        android:textColorHint="#ffffff" />
+       />
 
     <EditText
         android:id="@+id/age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/login_edittext"
+        style="@style/register"
         android:digits="0123456789"
-        android:hint="请输入年龄"
-        android:textColor="#ffffff"
-        android:padding="10dp"
-        android:textColorHint="#ffffff" />
+        android:hint="请输入年龄" />
 
     <EditText
         android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/login_edittext"
+        style="@style/register"
         android:hint="请输入地址"
-        android:padding="10dp"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"/>
+        />
 
     <RadioGroup
         android:id="@+id/rg"

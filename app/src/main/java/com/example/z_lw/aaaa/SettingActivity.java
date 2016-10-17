@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 /**
  * Created by Z-LW on 2016/9/28.
+ * 设置界面
  */
 public class SettingActivity extends Activity {
     @Override

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.tsz.afinal.FinalHttp;
@@ -21,12 +22,14 @@ import org.json.JSONObject;
 
 /**
  * Created by Z-LW on 2016/9/29.
+ * 注册页面
  */
 public class RegisterActivity extends Activity {
     EditText mAccount, mPassword, mName, mPhone, mAge, mAddress;
     RadioButton mMan, mWoman;
     RadioGroup mRg;
     Button mRegister, mCancel;
+    private TextView business;
     static final String REG_URL = "http://139.129.215.221:8080/service/UserServlet";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,18 @@ public class RegisterActivity extends Activity {
         mWoman = (RadioButton) findViewById(R.id.rb_woman);
         mRegister = (Button) findViewById(R.id.reg_register);
         mCancel = (Button) findViewById(R.id.cancel);
+        business = (TextView) findViewById(R.id.reg_business);
 
+        /*
+        * 点击企业注册
+         */
+        business.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent businessIntent = new Intent(RegisterActivity.this,BusinessActivity.class);
+                startActivity(businessIntent);
+            }
+        });
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
