@@ -66,7 +66,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         myMessage = (TextView) view.findViewById(R.id.my_message);
         loginTv = (TextView) view.findViewById(R.id.login_tv);
         userName = (TextView) view.findViewById(R.id.username_tv);
-        imageView_look = (ImageView) view.findViewById(R.id.look_imageView);
+//        imageView_look = (ImageView) view.findViewById(R.id.look_imageView);
         upLoad = (TextView) view.findViewById(R.id.upload);
         imageView_look = (ImageView) view.findViewById(R.id.look_imageViewOne);
     }
@@ -77,12 +77,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
             SharedPreferences preferences = getActivity().getSharedPreferences("download", Context.MODE_PRIVATE);
             imageurl = preferences.getString("url", "http://58pic.ooopic.com/58pic/14/70/68/34858PIC6sf.jpg");
             Picasso.with(getContext()).load(imageurl).into(imageView_look);
-
-
-
-//        SharedPreferences spPicture = getActivity().getSharedPreferences("Picture", getActivity().MODE_PRIVATE);
-//        editor = spPicture.edit();
-//        circleImageView.setImageBitmap(BitmapFactory.decodeFile(spPicture.getString("tu", " ")));
             SharedPreferences spUsername = getActivity().getSharedPreferences("Register", getActivity().MODE_PRIVATE);
             String name = spUsername.getString("userName", "");
             userName.setText(name);
@@ -97,19 +91,17 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
-            // 头像的点击
+            // 头击像的点击
 //        circleImageView.setOnClickListener(this);
-            // 设置点击
+            // 设置点
             setTv.setOnClickListener(this);
             myMessage.setOnClickListener(this);
             loginTv.setOnClickListener(this);
+            upLoad.setOnClickListener(this);
         }
         @Override
         public void onClick (View view){
             switch (view.getId()) {
-//            case R.id.drawerlayout_cr_photo:
-//                showDiaLog();
-//                break;
                 case R.id.tv_set:
                     Intent intent = new Intent(getContext(), SettingActivity.class);
                     startActivity(intent);
@@ -129,102 +121,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
             }
         }
 
-//    private void showDiaLog() {
-//        View view = LayoutInflater.from(getContext()).inflate(R.layout.photo_choose_dialog, null);
-//        final Dialog dialog = new Dialog(getContext(), R.style.transparentFrameWindowStyle);
-//        dialog.setContentView(view, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        Window window = dialog.getWindow();
-//        // 设置显示动画
-//        window.setWindowAnimations(R.style.main_menu_animstyle);
-//        WindowManager.LayoutParams wl = window.getAttributes();
-//        wl.x = 0;
-//        wl.y = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-//        // 以下这两句是为了保证按钮可以水平满屏
-//        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-//        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-//
-//        // 设置显示位置
-//        dialog.onWindowAttributesChanged(wl);
-//        // 设置点击外围解散
-//        dialog.setCanceledOnTouchOutside(true);
-//        dialog.show();
-//        btn_picture = (Button) window.findViewById(R.id.btn_picture);
-//        btn_cancle = (Button) window.findViewById(R.id.btn_cancle);
-//        btn_picture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent1 = new Intent(Intent.ACTION_PICK, null);
-//                intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//                startActivityForResult(intent1, 1);
-//                dialog.dismiss();
-//            }
-//        });
-//        btn_cancle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
-//    }
-//
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        // 用户没有进行有效的设置操作，返回
-//        if (resultCode == getActivity().RESULT_CANCELED) {//取消
-//            Toast.makeText(getActivity().getApplication(), "取消", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        switch (requestCode) {
-//            case 1:
-//                if (resultCode == getActivity().RESULT_OK) {
-//                    cropPhoto(data.getData());// 裁剪图片
-//                }
-//                Uri selectdeImage = data.getData();
-//                Cursor cursor = getActivity().getContentResolver().query(selectdeImage, null, null, null, null);
-//                while (cursor.moveToNext()) {
-//                    String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-//                    circleImageView.setImageBitmap(BitmapFactory.decodeFile(path));
-//                    editor.putString("tu", path);
-//                    editor.commit();
-//                }
-//                cursor.close();
-//                break;
-//        }
-//    }
-
-
-        /**
-         * 调用系统的裁剪
-         *
-         //     * @param uri
-         */
-//    public void cropPhoto(Uri uri) {
-//        Intent intent = new Intent("com.android.camera.action.CROP");
-//        intent.setDataAndType(uri, "image/*");
-//        intent.putExtra("crop", "true");
-//        // aspectX aspectY 是宽高的比例
-//        intent.putExtra("aspectX", 1);
-//        intent.putExtra("aspectY", 1);
-//        // outputX outputY 是裁剪图片宽高
-//        intent.putExtra("outputX", 150);
-//        intent.putExtra("outputY", 150);
-//        intent.putExtra("return-data", true);
-//        startActivityForResult(intent, 3);
-//    }
-
-//    public void cropPhoto(Uri uri) {
-//        Intent intent = new Intent("com.android.camera.action.CROP");
-//        intent.setDataAndType(uri, "image/*");
-//        intent.putExtra("crop", "true");
-//        // aspectX aspectY 是宽高的比例
-//        intent.putExtra("aspectX", 1);
-//        intent.putExtra("aspectY", 1);
-//        // outputX outputY 是裁剪图片宽高
-//        intent.putExtra("outputX", 150);
-//        intent.putExtra("outputY", 150);
-//        intent.putExtra("return-data", true);
-//        startActivityForResult(intent, 3);
-//    }
         //异步任务将图片显示在imageview上
         class MyAsync extends AsyncTask<String, Void, Bitmap> {
             URL url = null;

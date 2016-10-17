@@ -33,7 +33,6 @@
         <activity android:name=".LoginActivity"/>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".GrideViewDetailActivity" />
-        <activity android:name=".UpLoadActivity"/>
         <activity android:name=".BusinessActivity"/>
     </application>
 
