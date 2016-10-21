@@ -34,6 +34,8 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".GrideViewDetailActivity" />
         <activity android:name=".BusinessActivity"/>
+        <activity android:name=".UpLoadActivity"/>
+        <activity android:name=".SearchDetailsActivity"/>
     </application>
 
 </manifest>

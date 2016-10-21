@@ -54,14 +54,22 @@
                 android:layout_margin="10dp">
                 <ImageView
                     android:id="@+id/look_imageViewOne"
-                    android:layout_width="100dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:src="@mipmap/none"/>
-                <!--<ImageView-->
-                    <!--android:id="@+id/look_imageViewTwo"-->
-                    <!--android:layout_width="100dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginLeft="10dp" />-->
+                <ImageView
+                    android:id="@+id/look_imageViewTwo"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp" />
+                <ImageView
+                    android:id="@+id/look_imageViewThree"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp" />
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout

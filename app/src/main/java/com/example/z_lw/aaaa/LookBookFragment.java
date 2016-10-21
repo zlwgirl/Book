@@ -32,14 +32,11 @@ import java.net.URL;
 public class LookBookFragment extends Fragment implements View.OnClickListener {
     private TextView bookBtn;
     private DrawerLayout drawerLayout;
-    //    private CircleImageView circleImageView;
-    private Button btn_picture, btn_cancle;
-    private SharedPreferences.Editor editor;
     private TextView loginTv;
     private TextView setTv, myMessage;
-    private ImageView loginIm, imageView_look;
+    private ImageView loginIm, imageView_one,imageView_two,imageView_three;
     private TextView userName;
-    private String imageurl;
+    private String imageurlone;
     private TextView upLoad;
 
     /* 头像文件 */
@@ -61,22 +58,21 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         bookBtn = (TextView) view.findViewById(R.id.lookbook_bt_title);
         drawerLayout = (DrawerLayout) view.findViewById(R.id.drawlayout);
-//        circleImageView = (CircleImageView) view.findViewById(R.id.drawerlayout_cr_photo);
         setTv = (TextView) view.findViewById(R.id.tv_set);
         myMessage = (TextView) view.findViewById(R.id.my_message);
         loginTv = (TextView) view.findViewById(R.id.login_tv);
         userName = (TextView) view.findViewById(R.id.username_tv);
-//        imageView_look = (ImageView) view.findViewById(R.id.look_imageView);
         upLoad = (TextView) view.findViewById(R.id.upload);
-        imageView_look = (ImageView) view.findViewById(R.id.look_imageViewOne);
+        imageView_one = (ImageView) view.findViewById(R.id.look_imageViewOne);
     }
         @Override
         public void onActivityCreated (@Nullable Bundle savedInstanceState){
             super.onActivityCreated(savedInstanceState);
             //接受书城页面传过来的网址SP
-            SharedPreferences preferences = getActivity().getSharedPreferences("download", Context.MODE_PRIVATE);
-            imageurl = preferences.getString("url", "http://58pic.ooopic.com/58pic/14/70/68/34858PIC6sf.jpg");
-            Picasso.with(getContext()).load(imageurl).into(imageView_look);
+            SharedPreferences preferences = getActivity().getSharedPreferences("pdf", Context.MODE_PRIVATE);
+            imageurlone = preferences.getString("image", "http://58pic.ooopic.com/58pic/14/70/68/34858PIC6sf.jpg");
+            Picasso.with(getContext()).load(imageurlone).into(imageView_one);
+
             SharedPreferences spUsername = getActivity().getSharedPreferences("Register", getActivity().MODE_PRIVATE);
             String name = spUsername.getString("userName", "");
             userName.setText(name);
@@ -91,9 +87,6 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
                 }
             });
 
-            // 头击像的点击
-//        circleImageView.setOnClickListener(this);
-            // 设置点
             setTv.setOnClickListener(this);
             myMessage.setOnClickListener(this);
             loginTv.setOnClickListener(this);
@@ -121,40 +114,7 @@ public class LookBookFragment extends Fragment implements View.OnClickListener {
             }
         }
 
-        //异步任务将图片显示在imageview上
-        class MyAsync extends AsyncTask<String, Void, Bitmap> {
-            URL url = null;
-            HttpURLConnection connection = null;
-            InputStream stream = null;
-            Bitmap bitmap = null;
 
-            @Override
-            protected Bitmap doInBackground(String... strings) {
-                try {
-                    url = new URL(strings[0]);
-                    connection = (HttpURLConnection) url.openConnection();
-                    stream = connection.getInputStream();
-                    bitmap = BitmapFactory.decodeStream(stream);
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    stream.close();
-                    connection.disconnect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return bitmap;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                imageView_look.setImageBitmap(bitmap);
-            }
-        }
 //    public void cropPhoto(Uri uri) {
 //        Intent intent = new Intent("com.android.camera.action.CROP");
 //        intent.setDataAndType(uri, "image/*");

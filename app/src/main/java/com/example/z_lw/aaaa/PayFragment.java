@@ -46,7 +46,7 @@ public class PayFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor sp = getActivity().getSharedPreferences("paypicture", Context.MODE_PRIVATE).edit();
-                sp.putString("pay","http://139.129.215.221:8080/images/wyoos.png");
+                sp.putString("pay","http://139.129.215.221:8080/images/AdvancedMathematics.png");
                 sp.commit();
                 Intent intent = new Intent(getContext(),PayDetailsActivity.class);
                 getActivity().startActivity(intent);
@@ -56,7 +56,7 @@ public class PayFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Picasso.with(getContext()).load("http://139.129.215.221:8080/images/wyoos.png").into(imageView_pay);
+        Picasso.with(getContext()).load("http://139.129.215.221:8080/images/AdvancedMathematics.png").into(imageView_pay);
     }
 
 }
