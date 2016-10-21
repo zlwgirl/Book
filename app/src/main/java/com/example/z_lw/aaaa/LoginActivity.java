@@ -2,6 +2,7 @@ package com.example.z_lw.aaaa;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +54,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 params.put("type", "login");
                 params.put("account", account);
                 params.put("password", password);
+                SharedPreferences sp = getSharedPreferences("Register",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("userName", account);
+                editor.commit();
                 finalHttp.post(LOGIN_URL, params, new AjaxCallBack<Object>() {
                     @Override
                     public void onFailure(Throwable t, int errorNo,
@@ -84,6 +89,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             JSONObject object = new JSONObject(json);
             JSONObject data = object.getJSONObject("data");
             Boolean result = data.getBoolean("flag");
+            String name = data.getString("name");
+            String companyName = data.getString("companyName");
+
             if (result) {
                 Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_LONG)
                         .show();

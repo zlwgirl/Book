@@ -2,20 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <Button
-        android:id="@+id/selectfile"
+    android:orientation="vertical"
+    android:background="@mipmap/bg">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="选择文件" />
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+        <TextView
+            android:id="@+id/classify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="您选择的分类是："/>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="书的英文名：" />
+
+        <EditText
+            android:id="@+id/my_edit_bookname"
+            style="@style/register_et"
+            android:hint="请输入书名" />
+</LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="书的中文名：" />
+
+        <EditText
+            android:id="@+id/my_et_cnname"
+            style="@style/register_et"
+            android:hint="请输入中文名" />
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="出版社名：" />
+
+        <EditText
+            android:id="@+id/my_et_publishing"
+            style="@style/register_et"
+            android:hint="请输入出版社" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+    <ImageView
+        android:id="@+id/selectfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@mipmap/upload"
+        />
 
     <Button
         android:id="@+id/uploadfile"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="上传文件" />
-
+        android:text="确定" />
+    </LinearLayout>
     <TextView
         android:id="@+id/upload_tv"
         android:layout_width="wrap_content"

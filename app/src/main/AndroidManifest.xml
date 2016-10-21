@@ -20,10 +20,11 @@
         <activity android:name=".WelComeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MessageUploadActivity"/>
+        <activity android:name=".AboutOurActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".FreeDetailsActivity"/>
         <activity android:name=".SettingActivity"/>
@@ -34,6 +35,11 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".GrideViewDetailActivity" />
         <activity android:name=".BusinessActivity"/>
+        <activity android:name=".UpLoadActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

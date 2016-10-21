@@ -16,42 +16,48 @@ import java.util.UUID;
  * 上传工具类
  */
 public class UploadUtil {
-    private static final int TIME_OUT = 10 * 1000;   //超时时间
-    private static final String CHARSET = "utf-8"; //设置编码
+    private static final int TIME_OUT = 10 * 10000000; // 超时时间
+    private static final String CHARSET = "utf-8"; // 设置编码
+    public static final String SUCCESS = "1";
+    public static final String FAILURE = "0";
 
-    public static String UploadUtil(File file, String RequestURL) {
-        String result = null;
-        String BOUNDARY = UUID.randomUUID().toString();  //边界标识   随机生成
+    public static String uploadFile(File file) {
+        String BOUNDARY = UUID.randomUUID().toString(); // 边界标识 随机生成
         String PREFIX = "--", LINE_END = "\r\n";
-        String CONTENT_TYPE = "multipart/form-data";   //内容类型
-
+        String CONTENT_TYPE = "multipart/form-data"; // 内容类型
+        String RequestURL = "http://139.129.215.221:8080/upload/UploadServlet";
         try {
             URL url = new URL(RequestURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(TIME_OUT);
             conn.setConnectTimeout(TIME_OUT);
-            conn.setDoInput(true);// 允许输入流
-            conn.setDoOutput(true);// 允许输出流
-            conn.setUseCaches(false);// 不予许缓存
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Charase", CHARSET);
+            conn.setDoInput(true); // 允许输入流
+            conn.setDoOutput(true); // 允许输出流
+            conn.setUseCaches(false); // 不允许使用缓存
+            conn.setRequestMethod("POST"); // 请求方式
+            conn.setRequestProperty("Charset", CHARSET); // 设置编码
             conn.setRequestProperty("connection", "keep-alive");
-            conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary=" + BOUNDARY);
+            conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary="
+                    + BOUNDARY);
             if (file != null) {
-                // 当文件不为空，把文件包装并且上传
+                /**
+                 * 当文件不为空，把文件包装并且上传
+                 */
                 OutputStream outputSteam = conn.getOutputStream();
+
                 DataOutputStream dos = new DataOutputStream(outputSteam);
                 StringBuffer sb = new StringBuffer();
                 sb.append(PREFIX);
                 sb.append(BOUNDARY);
                 sb.append(LINE_END);
                 /**
-                 * 这里重点注意：
-                 * name里面的值为服务器端需要key   只有这个key 才可以得到对应的文件
-                 * filename是文件的名字，包含后缀名的   比如:abc.png
+                 * name里面的值为服务器端需要key 只有这个key 才可以得到对应的文件
                  */
-                sb.append("Content-Disposition: form-data; name=\"img\"; filename=\"" + file.getName() + "\"" + LINE_END);
-                sb.append("Content-Type: application/octet-stream; charset=" + CHARSET + LINE_END);
+
+                sb.append("Content-Disposition: form-data; name=\"file\"; filename=\""
+                        + file.getName() + "\"" + LINE_END);
+                sb.append("Content-Type: application/octet-stream; charset="
+                        + CHARSET + LINE_END);
                 sb.append(LINE_END);
                 dos.write(sb.toString().getBytes());
                 InputStream is = new FileInputStream(file);
@@ -62,31 +68,23 @@ public class UploadUtil {
                 }
                 is.close();
                 dos.write(LINE_END.getBytes());
-                byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END).getBytes();
+                byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END)
+                        .getBytes();
                 dos.write(end_data);
                 dos.flush();
                 /**
-                 * 获取响应码  200=成功
-                 * 当响应成功，获取响应的流
+                 * 获取响应码 200=成功 当响应成功，获取响应的流
                  */
                 int res = conn.getResponseCode();
                 if (res == 200) {
-                    InputStream input = conn.getInputStream();
-                    StringBuffer sb1 = new StringBuffer();
-                    int ss;
-                    while ((ss = input.read()) != -1) {
-                        sb1.append((char) ss);
-                    }
-                    result = sb1.toString();
+                    return SUCCESS;
                 }
-
-
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+        return FAILURE;
     }
 }

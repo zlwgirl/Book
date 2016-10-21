@@ -1,7 +1,6 @@
 package com.example.z_lw.aaaa;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,7 +24,7 @@ import org.json.JSONObject;
  * 注册页面
  */
 public class RegisterActivity extends Activity {
-    EditText mAccount, mPassword, mName, mPhone, mAge, mAddress;
+    EditText mAccount, mPassword, mName, mPhone, mAge, mAddress,mEmail;
     RadioButton mMan, mWoman;
     RadioGroup mRg;
     Button mRegister, mCancel;
@@ -48,6 +47,7 @@ public class RegisterActivity extends Activity {
         mRegister = (Button) findViewById(R.id.reg_register);
         mCancel = (Button) findViewById(R.id.cancel);
         business = (TextView) findViewById(R.id.reg_business);
+        mEmail = (EditText) findViewById(R.id.email);
 
         /*
         * 点击企业注册
@@ -57,6 +57,7 @@ public class RegisterActivity extends Activity {
             public void onClick(View view) {
                 Intent businessIntent = new Intent(RegisterActivity.this,BusinessActivity.class);
                 startActivity(businessIntent);
+                finish();
             }
         });
         mRegister.setOnClickListener(new View.OnClickListener() {
@@ -70,10 +71,8 @@ public class RegisterActivity extends Activity {
                 String address = mAddress.getText().toString();
                 String gender = mRg.getCheckedRadioButtonId() == R.id.rb_man ? "man"
                         : "woman";
-                SharedPreferences sp = getSharedPreferences("Register",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("userName",name);
-                editor.commit();
+                String email = mEmail.getText().toString();
+
 
                 FinalHttp finalHttp = new FinalHttp();
                 AjaxParams params = new AjaxParams();
@@ -85,6 +84,7 @@ public class RegisterActivity extends Activity {
                 params.put("gender", gender);
                 params.put("age", age);
                 params.put("address", address);
+                params.put("email",email);
                 finalHttp.post(REG_URL, params, new AjaxCallBack<Object>() {
                     @Override
                     public void onFailure(Throwable t, int errorNo,
@@ -120,19 +120,17 @@ public class RegisterActivity extends Activity {
             JSONObject data = object.getJSONObject("data");
             Boolean result = data.getBoolean("flag");
             String account = data.getString("account");
-            String name = data.getString("name");
+            String nameuser = data.getString("name");
             String phone = data.getString("phone");
             String gender = data.getString("gender");
             String age = data.getString("age");
             String address = data.getString("address");
-            SharedPreferences sp = getSharedPreferences("UserInformation",
-                    Context.MODE_PRIVATE);
-            sp.edit().putString("account", account).putString("name", name)
-                    .putString("phone", phone).putString("gender", gender)
-                    .putString("age", age).putString("address", address)
-                    .commit();
+            SharedPreferences sp = getSharedPreferences("Register",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("userName",nameuser);
+            editor.commit();
             if (result) {
-                Toast.makeText(RegisterActivity.this, "注册成功" + "昵称：" + name + "电话:" + phone, Toast.LENGTH_LONG)
+                Toast.makeText(RegisterActivity.this, "注册成功" + "昵称：" + nameuser + "电话:" + phone, Toast.LENGTH_LONG)
                         .show();
                 finish();
             }
