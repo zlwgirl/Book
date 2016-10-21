@@ -10,8 +10,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private RadioGroup radioGroup;
     private LookBookFragment lookBookFragment;
     private BookStoreFragment bookStoreFragment;
-    private GoodFriendFragment goodFriendFragment;
-    private ZoneFragment zoneFragment;
+    private MyFragment myFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +40,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 transaction.replace(R.id.frameLayout, bookStoreFragment);
                 break;
             case R.id.radioButtonThree:
-                if (goodFriendFragment == null) {
-                    goodFriendFragment = new GoodFriendFragment();
+                if (myFragment == null) {
+                    myFragment = new MyFragment();
                 }
-                transaction.replace(R.id.frameLayout, goodFriendFragment);
-                break;
-            case R.id.radioButtonFour:
-                if (zoneFragment == null) {
-                   zoneFragment = new ZoneFragment();
-                }
-                transaction.replace(R.id.frameLayout, zoneFragment);
+                transaction.replace(R.id.frameLayout, myFragment);
                 break;
         }
         transaction.commit();

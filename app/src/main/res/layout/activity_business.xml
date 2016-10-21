@@ -1,6 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/register_bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="企业注册"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/reg_personal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="个人注册"
+        android:textColor="#FF7F24"
+        android:textSize="14sp" />
+
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="账        号：" />
+
+        <EditText
+            android:id="@+id/bus_account"
+            style="@style/register_et"
+            android:digits="0123456789"
+            android:hint="请输入账号" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="密        码：" />
+
+        <EditText
+            android:id="@+id/bus_password"
+            style="@style/register_et"
+            android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmZXCVBNMLKJHGFDSAQWERTYUIOP"
+            android:hint="请输入密码" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="公  司  名：" />
+
+        <EditText
+            android:id="@+id/bus_name"
+            style="@style/register_et"
+            android:hint="请输入公司名" />
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="申请人名：" />
+
+        <EditText
+            android:id="@+id/bus_personalname"
+            style="@style/register_et"
+            android:hint="请输入名字" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="电话：" />
+
+        <EditText
+            android:id="@+id/bus_phone"
+            style="@style/register_et"
+            android:hint="请输入电话" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="支付：" />
+
+        <EditText
+            android:id="@+id/bus_apliy"
+            style="@style/register_et"
+            android:hint="请输入支付宝账号" />
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="邮箱：" />
+
+        <EditText
+            android:id="@+id/bus_email"
+            style="@style/register_et"
+            android:digits="0123456789zxcvbnmlkjhgfdsaqwertyuiopQWERTYUIOPLKJHGFDSAZXCVBNM@."
+            android:hint="请输入邮箱" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="地址：" />
+
+        <EditText
+            android:id="@+id/bus_adress"
+            style="@style/register_et"
+            android:hint="请输入地址" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/register_ly">
+
+        <Button
+            android:id="@+id/bus_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="注册" />
+
+        <Button
+            android:id="@+id/bus_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -2,62 +2,118 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/register_bg"
     android:orientation="vertical">
 
     <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="30dp"
-    android:gravity="center"
-    android:text="个人注册"
-    android:textSize="30sp"
-    android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="个人注册"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/reg_business"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="企业注册"
-        android:textSize="14sp"
-        android:textColor="#FF7F24"/>
+        android:textColor="#FF7F24"
+        android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/account"
-        style="@style/register"
-        android:digits="0123456789"
-        android:hint="请输入账号"
-      />
+    <LinearLayout style="@style/register_ly">
 
-    <EditText
-        android:id="@+id/password"
-       style="@style/register"
-        android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM"
-        android:hint="请输入密码" />
+        <TextView
+            style="@style/business_tv"
+            android:text="账号：" />
 
-    <EditText
-        android:id="@+id/name"
-        style="@style/register"
-        android:hint="请输入名字"
-        />
+        <EditText
+            android:id="@+id/account"
+            style="@style/register_et"
+            android:digits="0123456789"
+            android:hint="请输入账号" />
 
-    <EditText
-        android:id="@+id/phone"
-        style="@style/register"
-        android:digits="0123456789"
-        android:hint="请输入电话"
-       />
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
 
-    <EditText
-        android:id="@+id/age"
-        style="@style/register"
-        android:digits="0123456789"
-        android:hint="请输入年龄" />
+        <TextView
+            style="@style/business_tv"
+            android:text="密码：" />
 
-    <EditText
-        android:id="@+id/address"
-        style="@style/register"
-        android:hint="请输入地址"
-        />
+        <EditText
+            android:id="@+id/password"
+            style="@style/register_et"
+            android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM"
+            android:hint="请输入密码" />
+
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="名字：" />
+
+        <EditText
+            android:id="@+id/name"
+            style="@style/register_et"
+            android:hint="请输入名字" />
+
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="年龄：" />
+
+        <EditText
+            android:id="@+id/age"
+            style="@style/register_et"
+            android:digits="0123456789"
+            android:hint="请输入年龄" />
+
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="电话：" />
+
+        <EditText
+            android:id="@+id/phone"
+            style="@style/register_et"
+            android:digits="0123456789"
+            android:hint="请输入电话" />
+
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="邮箱：" />
+
+        <EditText
+            android:id="@+id/email"
+            style="@style/register_et"
+            android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM@."
+            android:hint="请输入邮箱" />
+
+    </LinearLayout>
+    <LinearLayout style="@style/register_ly">
+
+        <TextView
+            style="@style/business_tv"
+            android:text="地址：" />
+
+        <EditText
+            android:id="@+id/address"
+            style="@style/register_et"
+            android:hint="请输入地址" />
+
+    </LinearLayout>
+
+
 
     <RadioGroup
         android:id="@+id/rg"

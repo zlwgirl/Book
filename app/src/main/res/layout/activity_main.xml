@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/background"
+    android:background="@mipmap/bg"
     android:orientation="vertical"
     tools:context="com.example.z_lw.aaaa.MainActivity">
 
@@ -46,16 +46,8 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:drawableTop="@drawable/goodfriend_btn"
-            android:text="好友" />
-        <RadioButton
-            android:id="@+id/radioButtonFour"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:drawableTop="@drawable/zone_btn"
-            android:text="空间" />
+            android:drawableTop="@drawable/my_btn"
+            android:text="我的" />
+
     </RadioGroup>
 </LinearLayout>
