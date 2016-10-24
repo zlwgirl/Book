@@ -35,9 +35,24 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".UpLoadActivity"/>
         <activity android:name=".SearchDetailsActivity"/>
+        <activity android:name=".PayDemoActivity"/>
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:screenOrientation="behind"
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:screenOrientation="behind"
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
     </application>
 
 </manifest>

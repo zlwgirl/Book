@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.squareup.picasso.Picasso;
@@ -37,10 +38,10 @@ public class FreeFragment extends Fragment {
     private ViewFlipper flipper;
     private String sourceUrlOne ="http://139.129.215.221:8080/books/wyoos.pdf";
     private String sourceUrlTwo = "http://139.129.215.221:8080/books/LinearAlgebra.pdf";
-    private String sourceUrlThree = "http://139.129.215.221:8080/images/AdvancedMathematics.pdf";
-    private String imageUrlOne ="http://139.129.215.221:8080/books/wyoos.png";
-    private String imageUrlTwo = "http://139.129.215.221:8080/books/LinearAlgebra.png";
-    private String imageUrlThree = "http://139.129.215.221:8080/images/AdvancedMathematics.png";
+    private String sourceUrlThree = "http://139.129.215.221:8080/books/AdvancedMathematics.pdf";
+    private String imageUrlTwo ="http://139.129.215.221:8080/images/wyoos.png";
+    private String imageUrlThree = "http://139.129.215.221:8080/images/LinearAlgebra.png";
+    private String imageUrlOne = "http://139.129.215.221:8080/images/AdvancedMathematics.png";
 
     private ImageView imageView_one,imageView_two,imageView_three;
     private int[] imageId ={R.drawable.cycle1,R.drawable.cycle2,R.drawable.cycle3,R.drawable.cycle4};
@@ -102,15 +103,21 @@ public class FreeFragment extends Fragment {
                                         fos.write(buf,0,numread);
                                     }
                                 }
+
                             }
                             is.close();
                             connection.disconnect();
-                        } catch (MalformedURLException e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(), "success!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }catch (MalformedURLException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }).start();
                 SharedPreferences.Editor sp = getActivity().getSharedPreferences("pdf", Context.MODE_PRIVATE).edit();
@@ -147,6 +154,7 @@ public class FreeFragment extends Fragment {
                                         fos.write(buf,0,numread);
                                     }
                                 }
+
                             }
                             is.close();
                             connection.disconnect();

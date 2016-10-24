@@ -1,18 +1,16 @@
 package com.example.z_lw.aaaa;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.TextView;
 
 /**
  * Created by Z-LW on 2016/10/6.
@@ -20,9 +18,9 @@ import java.util.List;
  */
 public class MyFragment extends Fragment implements View.OnClickListener {
     private ImageView upLoad;
-    private GridView gridView;
-    private MyGrideViewAdapter myGrideViewAdapter;
-    private List<MyGriderViewBean> data;
+    private ImageView photoImage;
+    private TextView nameTv;
+    private TextView companyName;
 
     @Nullable
     @Override
@@ -35,7 +33,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         upLoad = (ImageView) view.findViewById(R.id.my_upload);
-        gridView = (GridView) view.findViewById(R.id.my_grideview);
+        photoImage = (ImageView) view.findViewById(R.id.item_image);
+        nameTv = (TextView) view.findViewById(R.id.item_text);
+        companyName = (TextView) view.findViewById(R.id.compang_name);
 
     }
 
@@ -43,17 +43,15 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         upLoad.setOnClickListener(this);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        SharedPreferences sp = getActivity().getSharedPreferences("UPLOAD", Context.MODE_PRIVATE);
+       String bookname = sp.getString("name","");
+        String pic = sp.getString("picture","");
+        photoImage.setImageResource(R.mipmap.book_replace);
+        nameTv.setText(bookname);
+        SharedPreferences spUsername = getActivity().getSharedPreferences("Register", getActivity().MODE_PRIVATE);
+        String name = spUsername.getString("userName", "");
+        companyName.setText(name);
 
-            }
-        });
-        myGrideViewAdapter = new MyGrideViewAdapter(getContext());
-        data = new ArrayList<>();
-        data.add(new MyGriderViewBean(R.mipmap.photo,"书的名字"));
-        myGrideViewAdapter.setData(data);
-        gridView.setAdapter(myGrideViewAdapter);
 
     }
 

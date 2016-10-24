@@ -3,9 +3,17 @@ package com.example.z_lw.aaaa;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,12 +42,15 @@ import java.util.List;
  * 上传界面
  */
 public class UpLoadActivity extends Activity implements View.OnClickListener {
-
-    private Button upLoadBtn;
-    private ImageView selectBtn;
+    private static final String TAG = "uploadImage";
+    private Button done;
+    private ImageView selectBtn, selectImage;
     private TextView upLoadTv;
     private File file;
+    private String picPath = null;
+    File fileImage;
     String request;
+    String requestImage;
     private EditText mbookEnName, mbookCnName, mpublishing;
     private String filePath = null;
     private TextView mClassify;
@@ -53,16 +64,18 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        upLoadBtn = (Button) findViewById(R.id.uploadfile);
         selectBtn = (ImageView) findViewById(R.id.selectfile);
         upLoadTv = (TextView) findViewById(R.id.upload_tv);
         mbookEnName = (EditText) findViewById(R.id.my_edit_bookname);
         mbookCnName = (EditText) findViewById(R.id.my_et_cnname);
         mpublishing = (EditText) findViewById(R.id.my_et_publishing);
-        upLoadBtn.setOnClickListener(this);
+        selectImage = (ImageView) findViewById(R.id.selectImage);
+        done = (Button) findViewById(R.id.done);
         selectBtn.setOnClickListener(this);
+        selectImage.setOnClickListener(this);
         mClassify = (TextView) findViewById(R.id.classify);
         mSpinner = (Spinner) findViewById(R.id.spinner);
+        done.setOnClickListener(this);
         // 添加一个下拉列表的list
         list.add("数学");
         list.add("语文");
@@ -103,7 +116,13 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
                 intent.setType("*/*");
                 startActivityForResult(intent, 1);
                 break;
-            case R.id.uploadfile:
+            case R.id.selectImage:
+                Intent intentImage = new Intent();
+                intentImage.setType("image/*");
+                intentImage.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intentImage, 2);
+                break;
+            case R.id.done:
                 file = new File(filePath);
                 if (file != null) {
                     new Thread(new Runnable() {
@@ -117,18 +136,18 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
                 String bookCnName = mbookCnName.getText().toString();
                 String publishing = mpublishing.getText().toString();
                 try {
-                  filename = URLDecoder.decode(getFileName(filePath), "utf-8");
+                    filename = URLDecoder.decode(getFileName(filePath), "utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
 
-                String path = "/books/"+filename;
-                String coverPath = "/images/"+getFileName(filePath);
+                String path = "/books/" + filename;
+                String coverPath = "/images/" + getFileName(picPath);
 
                 String category = mSpinner.getSelectedItem().toString();
                 FinalHttp finalHttp = new FinalHttp();
                 AjaxParams params = new AjaxParams();
-                params.put("type","importBooksInfo");
+                params.put("type", "importBooksInfo");
                 params.put("name", bookEnName);
                 params.put("category", category);
                 params.put("publishing", publishing);
@@ -147,6 +166,18 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
                         super.onFailure(t, errorNo, strMsg);
                     }
                 });
+
+                fileImage = new File(picPath);
+                if (fileImage != null) {
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            requestImage = UpLoadImageUtil.uploadFile(fileImage);
+                        }
+                    }).start();
+                    Toast.makeText(UpLoadActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                }
                 Intent intentUpLoad = new Intent(UpLoadActivity.this, MainActivity.class);
                 startActivity(intentUpLoad);
                 finish();
@@ -190,6 +221,47 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
                     alert();
                 }
                 break;
+            case 2:
+                if (resultCode == Activity.RESULT_OK) {
+                    /**
+                     * 当选择的图片不为空的话，在获取到图片的途径
+                     */
+                    Uri uri = geturi(data);
+                    System.out.println("test uri---------->" + uri);
+                    Log.e(TAG, "uri = " + uri);
+                    try {
+                        String[] pro = {MediaStore.Images.Media.DATA};
+                        System.out.println("pojo-------->" + pro);
+
+                        @SuppressWarnings("deprecation")
+                        Cursor cursor = getContentResolver().query(uri, pro, null,
+                                null, null);
+                        System.out.println("cursor-------->" + cursor);
+                        if (cursor != null) {
+                            ContentResolver cr = this.getContentResolver();
+                            cursor.moveToFirst();
+                            String path = cursor.getString(cursor
+                                    .getColumnIndex(MediaStore.Images.Media.DATA));
+                            System.out.println("path------->" + path);
+
+                            if (path.endsWith("jpg") || path.endsWith("png")) {
+                                picPath = path;
+                                System.out.println("pic----------->" + picPath);
+                                Bitmap bitmap = BitmapFactory.decodeStream(cr
+                                        .openInputStream(uri));
+//                                imageView.setImageBitmap(bitmap);
+                            } else {
+                                alert();
+                            }
+                        } else {
+                            alert();
+                        }
+
+                    } catch (Exception e) {
+                    }
+                }
+
+                break;
         }
     }
 
@@ -215,10 +287,11 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
             String path = data.getString("path");
             String coverPath = data.getString("coverPath");
             String cname = data.getString("cname");
-//            SharedPreferences sp = getSharedPreferences("Register",MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sp.edit();
-//            editor.putString("userName",nameuser);
-//            editor.commit();
+            SharedPreferences sp = getSharedPreferences("UPLOAD",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("name",cname);
+            editor.putString("picture",coverPath);
+            editor.commit();
             if (result) {
                 Toast.makeText(UpLoadActivity.this, "成功", Toast.LENGTH_SHORT).show();
                 finish();
@@ -226,5 +299,44 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    // tupian
+    public Uri geturi(android.content.Intent intent) {
+        Uri uri = intent.getData();
+        String type = intent.getType();
+        if (uri.getScheme().equals("file") && (type.contains("image/"))) {
+            String path = uri.getEncodedPath();
+            if (path != null) {
+                path = Uri.decode(path);
+                ContentResolver cr = this.getContentResolver();
+                StringBuffer buff = new StringBuffer();
+                buff.append("(").append(MediaStore.Images.ImageColumns.DATA)
+                        .append("=").append("'" + path + "'").append(")");
+                Cursor cur = cr.query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        new String[]{MediaStore.Images.ImageColumns._ID},
+                        buff.toString(), null, null);
+                int index = 0;
+                for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+                    index = cur
+                            .getColumnIndex(MediaStore.Images.ImageColumns._ID);
+                    // set _id value
+                    index = cur.getInt(index);
+                }
+                if (index == 0) {
+                    // do nothing
+                } else {
+                    Uri uri_temp = Uri
+                            .parse("content://media/external/images/media/"
+                                    + index);
+                    if (uri_temp != null) {
+                        uri = uri_temp;
+                    }
+                }
+            }
+        }
+        return uri;
+
     }
 }

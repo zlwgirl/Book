@@ -10,7 +10,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/massage_back_im"
+            android:id="@+id/my_massage_back_im"
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:gravity="center"
