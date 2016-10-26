@@ -13,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,6 +47,7 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
     private TextView upLoadTv;
     private File file;
     private String picPath = null;
+    private ImageView showPicture;
     File fileImage;
     String request;
     String requestImage;
@@ -70,6 +70,7 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
         mbookCnName = (EditText) findViewById(R.id.my_et_cnname);
         mpublishing = (EditText) findViewById(R.id.my_et_publishing);
         selectImage = (ImageView) findViewById(R.id.selectImage);
+        showPicture = (ImageView) findViewById(R.id.upload_im_show);
         done = (Button) findViewById(R.id.done);
         selectBtn.setOnClickListener(this);
         selectImage.setOnClickListener(this);
@@ -97,11 +98,11 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
                 mClassify.setText("NONE");
                 adapterView.setVisibility(View.VISIBLE);
             }
         });
+
 
     }
 
@@ -140,10 +141,8 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-
                 String path = "/books/" + filename;
                 String coverPath = "/images/" + getFileName(picPath);
-
                 String category = mSpinner.getSelectedItem().toString();
                 FinalHttp finalHttp = new FinalHttp();
                 AjaxParams params = new AjaxParams();
@@ -166,7 +165,6 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
                         super.onFailure(t, errorNo, strMsg);
                     }
                 });
-
                 fileImage = new File(picPath);
                 if (fileImage != null) {
                     new Thread(new Runnable() {
@@ -227,29 +225,22 @@ public class UpLoadActivity extends Activity implements View.OnClickListener {
                      * 当选择的图片不为空的话，在获取到图片的途径
                      */
                     Uri uri = geturi(data);
-                    System.out.println("test uri---------->" + uri);
-                    Log.e(TAG, "uri = " + uri);
                     try {
                         String[] pro = {MediaStore.Images.Media.DATA};
-                        System.out.println("pojo-------->" + pro);
-
                         @SuppressWarnings("deprecation")
                         Cursor cursor = getContentResolver().query(uri, pro, null,
                                 null, null);
-                        System.out.println("cursor-------->" + cursor);
                         if (cursor != null) {
                             ContentResolver cr = this.getContentResolver();
                             cursor.moveToFirst();
                             String path = cursor.getString(cursor
                                     .getColumnIndex(MediaStore.Images.Media.DATA));
-                            System.out.println("path------->" + path);
 
                             if (path.endsWith("jpg") || path.endsWith("png")) {
                                 picPath = path;
-                                System.out.println("pic----------->" + picPath);
                                 Bitmap bitmap = BitmapFactory.decodeStream(cr
                                         .openInputStream(uri));
-//                                imageView.setImageBitmap(bitmap);
+                               showPicture.setImageBitmap(bitmap);
                             } else {
                                 alert();
                             }

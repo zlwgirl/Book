@@ -36,6 +36,7 @@
         <activity android:name=".UpLoadActivity"/>
         <activity android:name=".SearchDetailsActivity"/>
         <activity android:name=".PayDemoActivity"/>
+        <activity android:name=".BusinessActivity"/>
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

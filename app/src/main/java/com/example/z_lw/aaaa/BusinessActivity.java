@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 /**
  * Created by Z-LW on 2016/10/13.
+ * 企业注册
  */
 public class BusinessActivity extends Activity {
     private EditText busAccount, busPassword, busName, busPhone, busEmail, busAdress,busPersonal,busApliy;
