@@ -30,4 +30,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
     compile files('libs/alipaySdk-20161009.jar')
+    compile files('libs/alipaySdk-20160825.jar')
 }
